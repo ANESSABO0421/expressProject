@@ -1,3 +1,4 @@
+import userPostSchema from "./models/userPostSchema.js";
 import userSchema from "./models/userSchema.js";
 import bcrypt from "bcrypt";
 
@@ -70,6 +71,34 @@ export async function getUsers(req, res) {
       res.status(201).send(users);
     } else {
       req.status(400).send("failed to fetch");
+    }
+  } catch (error) {
+    res.status(500).send("server error");
+  }
+}
+
+// users post
+export async function userPost(req, res) {
+  const { userId, des, caption, images } = req.body;
+
+  try {
+    // user not present
+    const verifyUser = await userSchema.findOne({ _id: userId });
+    if (!verifyUser) {
+      return res.status(400).send("user not found");
+    }
+
+    // post creating
+    const postOfUser = await userPostSchema.create({
+      userId,
+      des,
+      caption,
+      images,
+    });
+    if (postOfUser) {
+      res.status(201).send("posted successfully");
+    } else {
+      res.status(400).send("failed to post!!!!");
     }
   } catch (error) {
     res.status(500).send("server error");
