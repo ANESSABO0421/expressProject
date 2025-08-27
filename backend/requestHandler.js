@@ -34,16 +34,6 @@ export async function newUser(req, res) {
       return res.status(409).send("email already exitsted");
     }
 
-    // const toBase64 = (file) =>
-    //   new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => resolve(reader.result);
-    //     reader.onerror = reject;
-    //   });
-
-    // let base64File = image ? await toBase64(image) : "";
-
     const createUser = await userSchema.create({
       name,
       email,
@@ -76,6 +66,13 @@ export async function getUsers(req, res) {
     res.status(500).send("server error");
   }
 }
+
+// change Password
+
+
+
+
+
 
 // users post
 export async function userPost(req, res) {

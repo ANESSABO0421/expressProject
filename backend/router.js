@@ -7,6 +7,6 @@ router.route("/test").get(rh.Sample);
 router.route("/newuser").post(rh.newUser);
 router.route("/login").post(rh.Login);
 router.route("/getusers").get(rh.getUsers);
-router.route("/createpost").get(rh.userPost);
+router.route("/createpost").post(rh.userPost);
 
 export default router;
