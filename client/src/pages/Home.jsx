@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios, { all } from "axios";
+import axios from "axios";
 
 const Home = () => {
   const [userData, setUserData] = useState("");
@@ -13,14 +13,14 @@ const Home = () => {
     setUserData(user);
   };
 
-  const getAllUser = async () => {
-    const allUser = await axios.get("http://localhost:3000/apis/getusers");
-    setFormData(allUser.data);
+  const getAllPost = async () => {
+    const allPost = await axios.get("http://localhost:3000/apis/createpost");
+    console.log(allPost);
   };
 
   useEffect(() => {
     getUser();
-    getAllUser();
+    getAllPost();
   }, []);
 
   // console.log(userData.image);
@@ -44,13 +44,7 @@ const Home = () => {
           {userData.name}
         </div>
       </nav>
-      <div className="flex items-center justify-center flex-col gap-5">
-        {formData.map((u,indx)=>(
-          <div key={indx} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-            <p>Name:</p>{u.name}
-          </div>
-        ))}
-      </div>
+      <div className="flex items-center justify-center flex-col gap-5"></div>
     </div>
   );
 };

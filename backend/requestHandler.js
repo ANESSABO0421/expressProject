@@ -80,8 +80,8 @@ export async function ChangePassword(req, res) {
     const verifyOldPassword = await userSchema.findOne({
       password: oldPassword,
     });
-    if(!verifyOldPassword){
-      res.status(400).send
+    if (!verifyOldPassword) {
+      res.status(400).send;
     }
   } catch (error) {
     res.status(500).status("server error");
@@ -113,5 +113,21 @@ export async function userPost(req, res) {
     }
   } catch (error) {
     res.status(500).send("server error");
+  }
+}
+
+// get all post
+
+export async function getAllPost(req, res) {
+  try {
+    const posts = await userPostSchema.find();
+    if (posts) {
+      res.status(200).send(posts);
+    } else {
+      res.status(400).send("faled to fetch the posts");
+    }
+  } catch (error) {
+    res.status(500).send("server error");
+    console.log(error);
   }
 }
