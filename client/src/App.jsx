@@ -4,6 +4,7 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import ChangePassword from './pages/ChangePassword'
 import Home from './pages/Home'
+import CreatePost from './pages/CreatePost'
 
 
 const App = () => {
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/changepassword' element={<ChangePassword/>}/>
         <Route path='/home' element={<Home/>}/>
+        <Route path='/createpost' element={<CreatePost/>}/>
       </Routes>
     </div>
   )

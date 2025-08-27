@@ -68,11 +68,25 @@ export async function getUsers(req, res) {
 }
 
 // change Password
-
-
-
-
-
+export async function ChangePassword(req, res) {
+  const { email, oldPassword, newPassword } = req.body;
+  try {
+    // email verify
+    const verifyUser = await userSchema.findOne({ email: email });
+    if (!verifyUser) {
+      res.status(400).send("user not found!!!");
+    }
+    // old password match
+    const verifyOldPassword = await userSchema.findOne({
+      password: oldPassword,
+    });
+    if(!verifyOldPassword){
+      res.status(400).send
+    }
+  } catch (error) {
+    res.status(500).status("server error");
+  }
+}
 
 // users post
 export async function userPost(req, res) {

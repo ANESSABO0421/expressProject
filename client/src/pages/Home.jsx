@@ -26,7 +26,6 @@ const Home = () => {
   // console.log(userData.image);
   return (
     <div className="h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
-      {/* {userData.name} */}
       <nav className="h-[80px] lg:h-[70px] bg-white flex justify-between p-3 lg:p-5">
         {/* title */}
         <div className="flex items-center justify-center">

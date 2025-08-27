@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const userPostSchema = new mongoose.Schema({
-  userId: { type: Number },
+  userId: { type: String },
   des: { type: String },
   caption: { type: String },
   images: { type: Array },
