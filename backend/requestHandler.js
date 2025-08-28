@@ -69,22 +69,30 @@ export async function getUsers(req, res) {
 
 // change Password
 export async function ChangePassword(req, res) {
-  const { email, oldPassword, newPassword } = req.body;
+  const { email, oldpassword, newpassword } = req.body;
   try {
-    // email verify
+    // verify the emaillll
     const verifyUser = await userSchema.findOne({ email: email });
     if (!verifyUser) {
-      res.status(400).send("user not found!!!");
+      return res.status(404).send("User not found!!!");
     }
-    // old password match
-    const verifyOldPassword = await userSchema.findOne({
-      password: oldPassword,
-    });
-    if (!verifyOldPassword) {
-      res.status(400).send;
+
+    // now pasword verifyyyyy
+    const verifyPassword = await bcrypt.compare(
+      oldpassword,
+      verifyUser.password
+    );
+    if (!verifyPassword) {
+      return res.status(400).send("It is not your current password");
     }
+
+    verifyUser.password = await bcrypt.hash(newpassword, 10);
+    await verifyUser.save();
+
+    return res.status(200).send("Password updated successfully");
   } catch (error) {
-    res.status(500).status("server error");
+    console.error("ChangePassword error:", error);
+    res.status(500).send("Server error");
   }
 }
 

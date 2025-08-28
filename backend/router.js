@@ -9,5 +9,6 @@ router.route("/login").post(rh.Login);
 router.route("/getusers").get(rh.getUsers);
 router.route("/createpost").post(rh.userPost);
 router.route("/getallpost").get(rh.getAllPost);
+router.route("/changepassword").post(rh.ChangePassword);
 
 export default router;
