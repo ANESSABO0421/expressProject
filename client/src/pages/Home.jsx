@@ -145,7 +145,7 @@ const Home = () => {
                       ? "ring-4 ring-blue-500 scale-105"
                       : "opacity-70 hover:opacity-100"
                   }`}
-                  onClick={() => setCurrentIndex(idx)}
+                  onMouseEnter={() => setCurrentIndex(idx)}
                 />
               ))}
             </div>
