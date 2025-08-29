@@ -71,11 +71,13 @@ const Home = () => {
       <AnimatePresence>
         {selectedPost && (
           <motion.div
-            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50"
+            className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setSelectedPost(null)}
+            onClick={(e) => {
+              e.stopPropagation();
+            }}
           >
             <motion.div
               className="relative bg-white rounded-xl max-w-lg w-full overflow-hidden"
@@ -121,6 +123,8 @@ const Home = () => {
                   Next
                 </button>
               </div>
+              {/* carosel */}
+
               <button
                 onClick={() => setSelectedPost(null)}
                 className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
@@ -128,6 +132,21 @@ const Home = () => {
                 X
               </button>
             </motion.div>
+            <div className="flex  justify-center gap-2 p-4 overflow-x-auto">
+              {selectedPost.images.map((img, idx) => (
+                <img
+                  key={idx}
+                  src={img}
+                  alt="carosel-image"
+                  className={`w-16 h-16 object-cover rounded cursor-pointer transition ${
+                    idx === currentIndex
+                      ? "ring-4 ring-blue-500 scale-105"
+                      : "opacity-70 hover:opacity-100"
+                  }`}
+                  onClick={() => setCurrentIndex(idx)}
+                />
+              ))}
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
