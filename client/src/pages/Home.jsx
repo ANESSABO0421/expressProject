@@ -40,11 +40,11 @@ const Home = () => {
       <userContext.Provider value={userData}>
         <Navbar />
       </userContext.Provider>
-      <div className="flex flex-col lg:flex-row transition-all duration-300  h-auto gap-5 p-5">
+      <div className="flex flex-col  lg:flex-row  items-center justify-center transition-all duration-300  h-auto gap-5 p-5">
         {formData.map((p, indx) => (
           <div
             key={indx}
-            className="flex items-center justify-center h-[40vh] pt-[10vh]"
+            className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  p-5 items-center justify-center h-[40vh] "
           >
             <div
               className="bg-white h-[350px] w-[300px] flex items-center justify-center flex-col p-3 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 hover:shadow-lg/50"
@@ -71,7 +71,7 @@ const Home = () => {
       <AnimatePresence>
         {selectedPost && (
           <motion.div
-            className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50"
+            className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50 p-5"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -123,8 +123,6 @@ const Home = () => {
                   Next
                 </button>
               </div>
-              {/* carosel */}
-
               <button
                 onClick={() => setSelectedPost(null)}
                 className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
@@ -132,6 +130,7 @@ const Home = () => {
                 X
               </button>
             </motion.div>
+            {/* carosel */}
             <div className="flex  justify-center gap-2 p-4 overflow-x-auto">
               {selectedPost.images.map((img, idx) => (
                 <img
