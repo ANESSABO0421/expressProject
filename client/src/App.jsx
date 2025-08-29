@@ -5,6 +5,7 @@ import Login from './pages/Login'
 import ChangePassword from './pages/ChangePassword'
 import Home from './pages/Home'
 import CreatePost from './pages/CreatePost'
+import PostsDetails from './pages/PostsDetails'
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/changepassword' element={<ChangePassword/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/createpost' element={<CreatePost/>}/>
+        <Route path='/postdetails/:id' element={<PostsDetails/>}/>
       </Routes>
     </div>
   )

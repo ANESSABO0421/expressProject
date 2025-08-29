@@ -1,6 +1,10 @@
 import userPostSchema from "./models/userPostSchema.js";
 import userSchema from "./models/userSchema.js";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
 
 export async function Sample() {
   console.log("hail");
@@ -13,7 +17,14 @@ export async function Login(req, res) {
     const user = await userSchema.findOne({ email: email });
 
     const verifyPass = await bcrypt.compare(password, user.password);
+
+    // TOKEN GENERATION
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_TOKEN, {
+      expiresIn: "24h",
+    }); //this token consist of users id,taking the the token id from dotenv and expirsin
+
     if (verifyPass) {
+       //sending this as token to local storage
       res.status(201).send({ _id: user._id });
     } else {
       res.status(400).send("failed");

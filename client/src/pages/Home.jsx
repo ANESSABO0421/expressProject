@@ -3,9 +3,9 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import { userContext } from "../context/context";
-import { FaArrowLeft } from 'react-icons/fa';
-import { FaArrowRight } from 'react-icons/fa';
-import { AiOutlineClose } from 'react-icons/ai';
+import { FaArrowLeft } from "react-icons/fa";
+import { FaArrowRight } from "react-icons/fa";
+import { AiOutlineClose } from "react-icons/ai";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
@@ -62,7 +62,6 @@ const Home = () => {
                   className=" w-full object-cover rounded-md"
                 />
               </div>
-
               <p className="mt-3 font-semibold text-gray-800">{p.des}</p>
               <p className="text-sm text-gray-500">{p.caption}</p>
             </div>
@@ -100,7 +99,6 @@ const Home = () => {
                 transition={{ duration: 0.3 }}
               />
               <p className="p-4 text-gray-700">{selectedPost.caption}</p>
-              {/* button */}
               <div className="absolute inset-y-0 left-0 flex items-center">
                 <button
                   onClick={() =>
@@ -133,7 +131,6 @@ const Home = () => {
                 <AiOutlineClose/>
               </button>
             </motion.div>
-            {/* carosel */}
             <div className="flex  justify-center gap-2 p-4 overflow-x-auto">
               {selectedPost.images.map((img, idx) => (
                 <img
@@ -152,6 +149,7 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
+     
     </div>
   );
 };
