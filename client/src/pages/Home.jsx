@@ -3,6 +3,9 @@ import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "../components/Navbar";
 import { userContext } from "../context/context";
+import { FaArrowLeft } from 'react-icons/fa';
+import { FaArrowRight } from 'react-icons/fa';
+import { AiOutlineClose } from 'react-icons/ai';
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
@@ -108,7 +111,7 @@ const Home = () => {
                   }
                   className="bg-black/50 text-white p-2 rounded-r-xl"
                 >
-                  prev
+                  <FaArrowLeft/>
                 </button>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center">
@@ -120,14 +123,14 @@ const Home = () => {
                   }
                   className="bg-black/50 text-white p-2 rounded-l-xl"
                 >
-                  Next
+                  <FaArrowRight/>
                 </button>
               </div>
               <button
                 onClick={() => setSelectedPost(null)}
                 className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
               >
-                X
+                <AiOutlineClose/>
               </button>
             </motion.div>
             {/* carosel */}
