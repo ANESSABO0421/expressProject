@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { motion, AnimatePresence } from "framer-motion";
+import Navbar from "../components/Navbar";
+import { userContext } from "../context/context";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
@@ -35,24 +37,9 @@ const Home = () => {
   // console.log(userData.image);
   return (
     <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
-      <nav className="h-[80px] lg:h-[70px] bg-white flex justify-between p-3 lg:p-5">
-        {/* title */}
-        <div className="flex items-center justify-center">
-          <h1 className="text-[14px] lg:text-3xl font-bold">
-            Social media App
-          </h1>
-        </div>
-        {/* image */}
-        <div className="flex items-center justify-center">
-          <img
-            src={userData.image}
-            alt="user image"
-            className="h-[40px] w-[40px] lg:h-[60px] lg:w-[60px] rounded-full lg:rounded-full object-cover "
-          />
-          <h1 className="ml-2">Welcome,</h1>
-          {userData.name}
-        </div>
-      </nav>
+      <userContext.Provider value={userData}>
+        <Navbar />
+      </userContext.Provider>
       <div className="flex flex-col lg:flex-row transition-all duration-300  h-auto gap-5 p-5">
         {formData.map((p, indx) => (
           <div
@@ -107,39 +94,39 @@ const Home = () => {
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.3 }}
               />
-                <p className="p-4 text-gray-700">{selectedPost.caption}</p>
-                {/* button */}
-                <div className="absolute inset-y-0 left-0 flex items-center">
-                  <button
-                    onClick={() =>
-                      setCurrentIndex(
-                        (currentIndex - 1 + selectedPost.images.length) %
-                          selectedPost.images.length
-                      )
-                    }
-                    className="bg-black/50 text-white p-2 rounded-r-xl"
-                  >
-                    prev
-                  </button>
-                </div>
-                <div className="absolute inset-y-0 right-0 flex items-center">
-                  <button
-                    onClick={() =>
-                      setCurrentIndex(
-                        (currentIndex + 1) % selectedPost.images.length
-                      )
-                    }
-                    className="bg-black/50 text-white p-2 rounded-l-xl"
-                  >
-                    Next
-                  </button>
-                </div>
+              <p className="p-4 text-gray-700">{selectedPost.caption}</p>
+              {/* button */}
+              <div className="absolute inset-y-0 left-0 flex items-center">
                 <button
-                  onClick={() => setSelectedPost(null)}
-                  className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
+                  onClick={() =>
+                    setCurrentIndex(
+                      (currentIndex - 1 + selectedPost.images.length) %
+                        selectedPost.images.length
+                    )
+                  }
+                  className="bg-black/50 text-white p-2 rounded-r-xl"
                 >
-                  X
+                  prev
                 </button>
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center">
+                <button
+                  onClick={() =>
+                    setCurrentIndex(
+                      (currentIndex + 1) % selectedPost.images.length
+                    )
+                  }
+                  className="bg-black/50 text-white p-2 rounded-l-xl"
+                >
+                  Next
+                </button>
+              </div>
+              <button
+                onClick={() => setSelectedPost(null)}
+                className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
+              >
+                X
+              </button>
             </motion.div>
           </motion.div>
         )}
