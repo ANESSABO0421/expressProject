@@ -23,7 +23,11 @@ const Home = () => {
   };
 
   const getAllPost = async () => {
+    // const allPost = await axios.get("http://localhost:3000/apis/getallpost",{
+    //   headers:{Authorization:`Bearer ${token}`}
+    // });
     const allPost = await axios.get("http://localhost:3000/apis/getallpost");
+
     setFormData(allPost.data);
   };
 
@@ -109,7 +113,7 @@ const Home = () => {
                   }
                   className="bg-black/50 text-white p-2 rounded-r-xl"
                 >
-                  <FaArrowLeft/>
+                  <FaArrowLeft />
                 </button>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center">
@@ -121,14 +125,14 @@ const Home = () => {
                   }
                   className="bg-black/50 text-white p-2 rounded-l-xl"
                 >
-                  <FaArrowRight/>
+                  <FaArrowRight />
                 </button>
               </div>
               <button
                 onClick={() => setSelectedPost(null)}
                 className="absolute top-2 right-2 bg-black/70 text-white rounded-full px-3 py-1"
               >
-                <AiOutlineClose/>
+                <AiOutlineClose />
               </button>
             </motion.div>
             <div className="flex  justify-center gap-2 p-4 overflow-x-auto">
@@ -149,7 +153,6 @@ const Home = () => {
           </motion.div>
         )}
       </AnimatePresence>
-     
     </div>
   );
 };
