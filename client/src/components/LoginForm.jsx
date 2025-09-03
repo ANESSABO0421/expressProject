@@ -62,12 +62,12 @@ const LoginForm = () => {
             Signup Now
           </a>
         </p>
-        <p className="text-center mt-4">
+        {/* <p className="text-center mt-4">
           Want to change your Password?{" "}
           <a href="/changepassword" className="text-blue-500 underline-none">
             Change Password
           </a>
-        </p>
+        </p> */}
       </form>
     </div>
   );
