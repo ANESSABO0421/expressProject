@@ -14,11 +14,14 @@ const LoginForm = () => {
     });
     if (login) {
       window.alert("you have been successfully loggedIn");
-      // console.log(login.data);
+      console.log(login.data);
+
+      // Save token in localStorage
+      localStorage.setItem("token", login.data.token);
 
       localStorage.setItem("userId", `${login.data._id}`);
       window.location.href = "/home";
-    } 
+    }
   };
   return (
     <div className="flex items-center justify-center  px-4">

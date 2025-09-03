@@ -10,28 +10,31 @@ export async function Sample() {
   console.log("hail");
 }
 
-// Login
 export async function Login(req, res) {
   const { email, password } = req.body;
+
   try {
     const user = await userSchema.findOne({ email: email });
 
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
     const verifyPass = await bcrypt.compare(password, user.password);
+
+    if (!verifyPass) {
+      return res.status(400).send("Invalid credentials");
+    }
 
     // TOKEN GENERATION
     const token = jwt.sign({ userId: user._id }, process.env.JWT_TOKEN, {
       expiresIn: "24h",
-    }); //this token consist of users id,taking the the token id from dotenv and expirsin
+    });
 
-    if (verifyPass) {
-       //sending this as token to local storage
-      res.status(201).send({ _id: user._id });
-    } else {
-      res.status(400).send("failed");
-    }
+    return res.status(200).send({ _id: user._id, token });
   } catch (error) {
-    res.status(500).send("server error");
-    console.log(error);
+    console.error(error);
+    return res.status(500).send("Server error");
   }
 }
 
@@ -143,7 +146,7 @@ export async function getAllPost(req, res) {
     if (posts) {
       res.status(200).send(posts);
     } else {
-      res.status(400).send("faled to fetch the posts");
+      res.status(400).send("failed to fetch the posts");
     }
   } catch (error) {
     res.status(500).send("server error");

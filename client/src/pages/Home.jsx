@@ -6,15 +6,18 @@ import { userContext } from "../context/context";
 import { FaArrowLeft } from "react-icons/fa";
 import { FaArrowRight } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
+import { Link } from "react-router-dom";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
   // selecting image and carosel
   const [selectedPost, setSelectedPost] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  console.log(selectedPost);
+  // console.log(selectedPost);
 
   const userId = localStorage.getItem("userId");
+  // token is send now get it
+  const token = localStorage.getItem("token");
 
   const getUser = async () => {
     const users = await axios.get("http://localhost:3000/apis/getusers");
@@ -23,10 +26,10 @@ const Home = () => {
   };
 
   const getAllPost = async () => {
-    // const allPost = await axios.get("http://localhost:3000/apis/getallpost",{
-    //   headers:{Authorization:`Bearer ${token}`}
-    // });
-    const allPost = await axios.get("http://localhost:3000/apis/getallpost");
+    // const allPost = await axios.get("http://localhost:3000/apis/getallpost");
+    const allPost = await axios.get("http://localhost:3000/apis/getallpost", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
 
     setFormData(allPost.data);
   };
@@ -49,9 +52,10 @@ const Home = () => {
       </userContext.Provider>
       <div className="flex flex-col  lg:flex-row  items-center justify-center transition-all duration-300  h-auto gap-5 p-5">
         {formData.map((p, indx) => (
-          <div
+          <Link
             key={indx}
             className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4  p-5 items-center justify-center h-[40vh] "
+            to={`/postdetails/${p._id}`}
           >
             <div
               className="bg-white h-[350px] w-[300px] flex items-center justify-center flex-col p-3 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 hover:shadow-lg/50"
@@ -69,12 +73,12 @@ const Home = () => {
               <p className="mt-3 font-semibold text-gray-800">{p.des}</p>
               <p className="text-sm text-gray-500">{p.caption}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
       {/*Model*/}
-      <AnimatePresence>
+      {/* <AnimatePresence>
         {selectedPost && (
           <motion.div
             className="fixed inset-0 bg-black/70 flex flex-col items-center justify-center z-50 p-5"
@@ -152,7 +156,7 @@ const Home = () => {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
     </div>
   );
 };
