@@ -3,11 +3,56 @@ import userSchema from "./models/userSchema.js";
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
+import nodemailer from "nodemailer";
+import Otp from "./models/Otp.js";
 
 dotenv.config();
 
-export async function Sample() {
-  console.log("hail");
+// nodemailer
+const transporter = nodemailer.createTransport({
+  // host: "smtp.ethereal.email",
+  service: "gmail",
+  // port: 587,
+  // secure: false, // true for 465, false for other ports
+  auth: {
+    user: "aneesaboo123@gmail.com",
+    pass: "ettt sebp kxfs zuyf",
+  },
+});
+
+export async function generateOtp(req, res) {
+  try {
+    const { email } = req.body;
+
+    const verifyEmail = await userSchema.findOne({ email: email });
+    if (verifyEmail) {
+      return res.status(400).send("Email already existed!");
+    }
+    console.log(verifyEmail);
+
+    const newOtp = Math.floor(1000 + Math.random() * 9000);
+
+    const otpExist = await Otp.findOne({ email: email });
+
+    if (otpExist) {
+      await Otp.updateOne({ email }, { $set: { otp: newOtp } });
+    } else {
+      await Otp.create({ email, otp: newOtp });
+    }
+
+    await transporter.sendMail({
+      from: "aneesaboo123@gmail.com",
+      to: email,
+      subject: "Verification",
+      text: `Your OTP is ${newOtp}`,
+      html: `<b>Your OTP is ${newOtp}</b>`,
+    });
+
+    return res.status(200).send("OTP sent successfully");
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
 }
 
 export async function Login(req, res) {
@@ -41,6 +86,9 @@ export async function Login(req, res) {
 // SignUp
 export async function newUser(req, res) {
   const { name, email, password, phoneNumber, image } = req.body;
+  if (name || email || password || phoneNumber || image) {
+    return res.status(400).send("fill all the fields");
+  }
   try {
     const verifyEmail = await userSchema.findOne({ email: email });
     const hpass = await bcrypt.hash(password, 10);
@@ -153,3 +201,50 @@ export async function getAllPost(req, res) {
     console.log(error);
   }
 }
+
+// saved post creation
+export async function saveThePost(req, res) {
+  try {
+    const { userId, postId } = req.body;
+
+    const user = await userSchema.findById(userId);
+    if (!user) {
+      return res.status(400).send("user not found!!!");
+    }
+    const alreadyPostExist = user.savedPosts.includes(postId);
+    if (alreadyPostExist) {
+      // dont add the post
+      // add all the post to savedpost array except the not matchedId
+      user.savedPosts = user.savedPosts.filter(
+        (id) => id.toString() !== postId
+      );
+      await user.save();
+      return res.status(200).send("saved already!!!");
+    } else {
+      // add the post
+      user.savedPosts.push(postId);
+      await user.save();
+      return res.status(200).send("Post saved");
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("server error");
+  }
+}
+
+// get all user post
+export const GetAllSavePost = async (req, res) => {
+  try {
+    // getting the user based on passed id
+    const { userId } = req.params;
+    // first check the id and then populate ean it it will add all the details to the saved post array that has a reference from collection posts
+    const user = await userSchema.findById(userId).populate("savedPosts");
+    // if (!user) {
+    //   return res.status(400).send("user is not found!!!");
+    // }
+    return res.status(200).json(user.savedPosts);
+  } catch (error) {
+    res.status(500).send({ message: error.message });
+    console.log(error.message);
+  }
+};

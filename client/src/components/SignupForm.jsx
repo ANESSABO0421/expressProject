@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const SignupForm = () => {
   const [name, setName] = useState("");
@@ -28,8 +29,6 @@ const SignupForm = () => {
     }
     // console.log("hai");
     // console.log(name, email, password, phoneNumber);
-    
-
 
     const createNewUser = await axios.post(
       "http://localhost:3000/apis/newuser",
@@ -38,7 +37,7 @@ const SignupForm = () => {
         email,
         password,
         phoneNumber,
-        image
+        image,
       }
     );
 
@@ -46,7 +45,7 @@ const SignupForm = () => {
 
     if (createNewUser) {
       window.alert("successfully added new user");
-      window.location.href="/"
+      window.location.href = "/";
     } else {
       window.alert("failed to create new user");
     }
@@ -71,6 +70,7 @@ const SignupForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setName(e.target.value)}
           value={name}
+          required
         />
         <input
           type="email"
@@ -78,6 +78,7 @@ const SignupForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          required
         />
 
         <input
@@ -86,6 +87,7 @@ const SignupForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setPhoneNumber(e.target.value)}
           value={phoneNumber}
+          required
         />
 
         <input
@@ -94,6 +96,7 @@ const SignupForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          required
         />
         <input
           type="password"
@@ -101,6 +104,7 @@ const SignupForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setConfirmPass(e.target.value)}
           value={confirmPass}
+          required
         />
         <input
           type="file"
@@ -116,9 +120,9 @@ const SignupForm = () => {
         </button>
         <p className="text-center mt-4">
           Already have an account?{" "}
-          <a href="/" className="text-blue-500 underline">
+          <Link to={"/"} className="text-blue-500 underline">
             Login Now
-          </a>
+          </Link>
         </p>
       </form>
     </div>

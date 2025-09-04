@@ -7,9 +7,6 @@ const Login = () => {
     <div className="flex h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
       <motion.div
         className="hidden md:flex flex-1 items-center justify-center"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.5, delay: 1, ease: easeOut }}
       >
         <img
           className="h-[80%] object-cover rounded-2xl shadow-2xl"

@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -41,6 +42,7 @@ const LoginForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
+          required
         />
         <input
           type="password"
@@ -48,6 +50,7 @@ const LoginForm = () => {
           className="w-full border border-gray-300 rounded-lg px-4 py-3 mb-4 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           onChange={(e) => setPassword(e.target.value)}
           value={password}
+          required
         />
         <button
           type="submit"
@@ -58,16 +61,11 @@ const LoginForm = () => {
 
         <p className="text-center mt-4">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-500 underline-none">
+          <Link to={"/signup"} className="text-blue-500 underline-none">
             Signup Now
-          </a>
+          </Link>
         </p>
-        {/* <p className="text-center mt-4">
-          Want to change your Password?{" "}
-          <a href="/changepassword" className="text-blue-500 underline-none">
-            Change Password
-          </a>
-        </p> */}
+        
       </form>
     </div>
   );

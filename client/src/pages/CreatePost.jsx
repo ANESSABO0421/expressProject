@@ -14,7 +14,7 @@ const CreatePost = () => {
   const createPost = async (e) => {
     try {
       e.preventDefault();
-      console.log("haiii");
+      // console.log("haiii");
 
       const toBase64 = (file) =>
         new Promise((resolve, reject) => {
