@@ -6,6 +6,7 @@ import ChangePassword from './pages/ChangePassword'
 import Home from './pages/Home'
 import CreatePost from './pages/CreatePost'
 import PostsDetails from './pages/PostsDetails'
+import SavedPost from './pages/SavedPost'
 
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='/home' element={<Home/>}/>
         <Route path='/createpost' element={<CreatePost/>}/>
         <Route path='/postdetails/:id' element={<PostsDetails/>}/>
+        <Route path='/savedpost/:id' element={<SavedPost/>}/>
       </Routes>
     </div>
   )

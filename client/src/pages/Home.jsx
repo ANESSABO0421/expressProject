@@ -40,7 +40,7 @@ const Home = () => {
       const response = await axios.post(
         "http://localhost:3000/apis/addsavepost",
         {
-          userId,
+          userId:decoded.userId,
           postId: postId,
         }
       );

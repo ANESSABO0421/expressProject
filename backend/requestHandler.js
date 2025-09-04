@@ -10,10 +10,7 @@ dotenv.config();
 
 // nodemailer
 const transporter = nodemailer.createTransport({
-  // host: "smtp.ethereal.email",
   service: "gmail",
-  // port: 587,
-  // secure: false, // true for 465, false for other ports
   auth: {
     user: "aneesaboo123@gmail.com",
     pass: "ettt sebp kxfs zuyf",

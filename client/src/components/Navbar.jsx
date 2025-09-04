@@ -4,10 +4,14 @@ import { userContext } from "../context/context";
 import { FaHamburger, FaWindowClose } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
 const Navbar = () => {
   const userData = useContext(userContext);
   const [open, setOpen] = useState(false);
+  const tokenUserId = localStorage.getItem("token");
+
+  const decoded=jwtDecode(tokenUserId)
 
   function Logout() {
     localStorage.removeItem("userId");
@@ -61,10 +65,15 @@ const Navbar = () => {
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <Link>Saved post</Link>
+        <Link to={`/savedpost/${decoded.userId}`}>Saved post</Link>
         <Link to={`/changepassword`}>Change Password</Link>
         <Link>Edit Your Post</Link>
-        <button onClick={()=>Logout()} className="bg-red-100 text-red-900 p-4 rounded cursor-pointer hover:bg-red-400 hover:-translate-y-1 duration-300 ease-out">Logout</button>
+        <button
+          onClick={() => Logout()}
+          className="bg-red-100 text-red-900 p-4 rounded cursor-pointer hover:bg-red-400 hover:-translate-y-1 duration-300 ease-out"
+        >
+          Logout
+        </button>
       </div>
     </div>
   );

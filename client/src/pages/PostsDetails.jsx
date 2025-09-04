@@ -6,6 +6,7 @@ import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { jwtDecode } from "jwt-decode";
 
 const PostsDetails = () => {
   const { id } = useParams();
@@ -13,13 +14,14 @@ const PostsDetails = () => {
   // console.log(userId)
   // console.log(id);
   const token = localStorage.getItem("token");
+  const decoded=jwtDecode(token)
 
   const [user, setUser] = useState("");
   const [userSelectedPost, setUserSelectedPost] = useState(null);
 
   async function getUser() {
     const getUsers = await axios.get("http://localhost:3000/apis/getusers");
-    const getUser = getUsers.data.find((u) => u._id == userId);
+    const getUser = getUsers.data.find((u) => u._id == decoded.userId);
     setUser(getUser)
   }
 
