@@ -211,6 +211,7 @@ export async function saveThePost(req, res) {
     if (!user) {
       return res.status(400).send("user not found!!!");
     }
+    // if this match dont add
     const alreadyPostExist = user.savedPosts.includes(postId);
     if (alreadyPostExist) {
       // dont add the post

@@ -2,10 +2,14 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import {jwtDecode} from "jwt-decode"
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("hai");
@@ -20,7 +24,7 @@ const LoginForm = () => {
       // Save token in localStorage
       localStorage.setItem("token", login.data.token);
 
-      localStorage.setItem("userId", `${login.data._id}`);
+      // localStorage.setItem("userId", `${login.data._id}`);
       window.location.href = "/home";
     }
   };

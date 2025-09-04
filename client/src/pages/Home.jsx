@@ -4,6 +4,7 @@ import Navbar from "../components/Navbar";
 import { userContext } from "../context/context";
 import { FaArrowLeft, FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
@@ -12,13 +13,16 @@ const Home = () => {
   const [savedPosts, setSavedPosts] = useState([]);
   // console.log(save);
 
-  const userId = localStorage.getItem("userId");
+  // const userId = localStorage.getItem("userId");
   // token is send now get it
   const token = localStorage.getItem("token");
 
+  const decoded = jwtDecode(token);
+  console.log(decoded.userId);
+
   const getUser = async () => {
     const users = await axios.get("http://localhost:3000/apis/getusers");
-    const user = users.data.find((u) => u._id == userId);
+    const user = users.data.find((u) => u._id == decoded.userId);
     setUserData(user);
   };
 
@@ -42,8 +46,10 @@ const Home = () => {
       );
       if (savedPosts.includes(postId)) {
         setSavedPosts(savedPosts.filter((id) => id !== postId));
+        window.alert("already saved the post");
       } else {
         setSavedPosts([...savedPosts, postId]);
+        window.alert("saved the post");
       }
     } catch (error) {
       console.log(error);
