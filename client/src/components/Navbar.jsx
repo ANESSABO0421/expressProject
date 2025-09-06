@@ -5,20 +5,28 @@ import { FaHamburger, FaWindowClose } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const userData = useContext(userContext);
   const [open, setOpen] = useState(false);
   const tokenUserId = localStorage.getItem("token");
 
-  const decoded=jwtDecode(tokenUserId)
+  const decoded = jwtDecode(tokenUserId);
 
   function Logout() {
     localStorage.removeItem("userId");
     localStorage.removeItem("token");
 
-    window.location.href = "/";
-    window.alert("you have been successfully logged out");
+    toast.success("You have been logged out", {
+      className: "!bg-indigo-600 !text-white !rounded-lg !shadow-lg",
+      bodyClassName: "!text-white font-semibold",
+      progressClassName: "!bg-yellow-400",
+    });
+
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   }
 
   const toggle = () => {

@@ -247,3 +247,19 @@ export const GetAllSavePost = async (req, res) => {
     console.log(error.message);
   }
 };
+
+// otp verification on Sign up
+export const verifyOtp = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    // when we click the send otp the email will send to tp schema
+    const emailFind = await Otp.find({ email: email });
+    if(!emailFind){
+      res.send(500).send("no ")
+
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send(error.message);
+  }
+};

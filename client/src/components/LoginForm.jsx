@@ -2,13 +2,12 @@ import React from "react";
 import { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {jwtDecode} from "jwt-decode"
+import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
-  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,14 +17,21 @@ const LoginForm = () => {
       password,
     });
     if (login) {
-      window.alert("you have been successfully loggedIn");
+      toast.success("You have been logged out", {
+        className: "!bg-indigo-600 !text-white !rounded-lg !shadow-lg",
+        bodyClassName: "!text-white font-semibold",
+        progressClassName: "!bg-yellow-400",
+      });
       console.log(login.data);
 
       // Save token in localStorage
       localStorage.setItem("token", login.data.token);
 
       // localStorage.setItem("userId", `${login.data._id}`);
-      window.location.href = "/home";
+      // window.location.href = "/home";
+      setTimeout(() => {
+        window.location.href = "/home";
+      }, 3000);
     }
   };
   return (
@@ -69,7 +75,6 @@ const LoginForm = () => {
             Signup Now
           </Link>
         </p>
-        
       </form>
     </div>
   );
