@@ -11,9 +11,6 @@ const Home = () => {
 
   // for saving state
   const [savedPosts, setSavedPosts] = useState([]);
-  // console.log(save);
-
-  // const userId = localStorage.getItem("userId");
   // token is send now get it
   const token = localStorage.getItem("token");
 
@@ -66,7 +63,7 @@ const Home = () => {
       <userContext.Provider value={userData}>
         <Navbar />
       </userContext.Provider>
-      <div className="flex flex-col lg:flex-row items-center justify-center transition-all duration-300 h-auto gap-5 p-5">
+      <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-center transition-all duration-300 h-auto gap-5 p-5">
         {formData.map((p, indx) => (
           <div
             key={indx}

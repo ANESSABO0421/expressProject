@@ -15,5 +15,6 @@ router.route("/addsavepost").post(rh.saveThePost);
 // get all the saved post of a user
 router.route("/getSavedPost/:userId").get(rh.GetAllSavePost);
 router.route("/generateotp").post(rh.generateOtp);
+router.route("/verifyotp").post(rh.verifyOtp);
 
 export default router;

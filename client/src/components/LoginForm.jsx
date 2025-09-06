@@ -17,7 +17,7 @@ const LoginForm = () => {
       password,
     });
     if (login) {
-      toast.success("You have been logged out", {
+      toast.success("You have been logged in succesfully", {
         className: "!bg-indigo-600 !text-white !rounded-lg !shadow-lg",
         bodyClassName: "!text-white font-semibold",
         progressClassName: "!bg-yellow-400",

@@ -12,8 +12,8 @@ dotenv.config();
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "aneesaboo123@gmail.com",
-    pass: "ettt sebp kxfs zuyf",
+    user: "extaneesspirit@gmail.com",
+    pass: "htsy xfeg oail wqil",
   },
 });
 
@@ -28,6 +28,7 @@ export async function generateOtp(req, res) {
     console.log(verifyEmail);
 
     const newOtp = Math.floor(1000 + Math.random() * 9000);
+    console.log(newOtp);
 
     const otpExist = await Otp.findOne({ email: email });
 
@@ -84,9 +85,9 @@ export async function Login(req, res) {
 // SignUp
 export async function newUser(req, res) {
   const { name, email, password, phoneNumber, image } = req.body;
-  if (name || email || password || phoneNumber || image) {
-    return res.status(400).send("fill all the fields");
-  }
+  // if (name || email || password || phoneNumber || image) {
+  //   return res.status(400).send("fill all the fields");
+  // }
   try {
     const verifyEmail = await userSchema.findOne({ email: email });
     const hpass = await bcrypt.hash(password, 10);
@@ -251,13 +252,20 @@ export const GetAllSavePost = async (req, res) => {
 // otp verification on Sign up
 export const verifyOtp = async (req, res) => {
   try {
-    const { email, otp } = req.body;
+    const { email, userotp } = req.body;
     // when we click the send otp the email will send to tp schema
     const emailFind = await Otp.find({ email: email });
-    if(!emailFind){
-      res.send(500).send("no ")
-
+    if (!emailFind) {
+      res.send(400).send("no email has been found");
     }
+    // email find now the emails otp and compare the models otp and user entered otp
+    if (emailFind.otp !== parseInt(userotp)) {
+      res.send(400).send("invalid otp");
+    }
+
+    // delete once verified
+    await Otp.deleteOne({ email });
+    return res.status(200).send("otp verified suceessfully");
   } catch (error) {
     console.log(error.message);
     res.status(500).send(error.message);

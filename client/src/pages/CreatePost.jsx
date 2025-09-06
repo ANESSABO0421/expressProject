@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useState } from "react";
+import { jwtDecode } from "jwt-decode";
 
 const CreatePost = () => {
   const [description, setDescription] = useState("");
@@ -8,6 +9,12 @@ const CreatePost = () => {
   const [image, setImage] = useState([]);
 
   const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("token");
+  console.log(token);
+
+  const decode = jwtDecode(token);
+  const user = decode.userId;
+  console.log(user);
   //   console.log(userId);
 
   // createPost
@@ -29,7 +36,7 @@ const CreatePost = () => {
       const sendData = await axios.post(
         "http://localhost:3000/apis/createpost",
         {
-          userId,
+          userId: user,
           des: description,
           caption,
           images,
@@ -38,7 +45,7 @@ const CreatePost = () => {
 
       if (sendData.status == 201) {
         window.alert("posted successfully");
-        window.location.href="/home"
+        window.location.href = "/home";
       } else if (sendData.status == 400) {
         window.alert("failed to post");
       }
