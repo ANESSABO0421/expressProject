@@ -67,6 +67,7 @@ const Navbar = () => {
       >
         <Link to={`/savedpost/${decoded.userId}`}>Saved post</Link>
         <Link to={`/changepassword`}>Change Password</Link>
+        <Link to={`/createpost`}>New Post</Link>
         <Link>Edit Your Post</Link>
         <button
           onClick={() => Logout()}

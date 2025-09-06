@@ -73,6 +73,7 @@ export async function Login(req, res) {
       expiresIn: "24h",
     });
 
+    // only need token
     return res.status(200).send({ _id: user._id, token });
   } catch (error) {
     console.error(error);

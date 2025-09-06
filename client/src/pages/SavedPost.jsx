@@ -38,6 +38,7 @@ const SavedPost = () => {
                 modules={[Navigation, Pagination]}
                 pagination={{ clickable: true }}
                 navigation
+                loop={true}
                 className="rounded-xl overflow-hidden"
               >
                 {post.images?.map((img, i) => (
