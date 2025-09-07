@@ -76,7 +76,7 @@ const Navbar = () => {
         <Link to={`/savedpost/${decoded.userId}`}>Saved post</Link>
         <Link to={`/changepassword`}>Change Password</Link>
         <Link to={`/createpost`}>New Post</Link>
-        <Link>Edit Your Post</Link>
+        <Link to={`/editpost/${decoded.userId}`}>Edit Your Post</Link>
         <button
           onClick={() => Logout()}
           className="bg-red-100 text-red-900 p-4 rounded cursor-pointer hover:bg-red-400 hover:-translate-y-1 duration-300 ease-out"

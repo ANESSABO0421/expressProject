@@ -40,12 +40,19 @@ const SignupForm = () => {
   const handleVerifyOtp = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/apis/verifyotp", {
-        email,
-        userotp: otp,
-      });
-      toast.success("otp verified");
-      setStep(3);
+      const otpVerify = await axios.post(
+        "http://localhost:3000/apis/verifyotp",
+        {
+          email,
+          userotp: otp,
+        }
+      );
+      if (!otpVerify) {
+        toast.error("inavlid Otp");
+      } else {
+        toast.success("otp verified");
+        setStep(3);
+      }
     } catch (error) {
       toast.error("inavlid Otp");
     }

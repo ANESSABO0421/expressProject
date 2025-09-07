@@ -16,5 +16,7 @@ router.route("/addsavepost").post(rh.saveThePost);
 router.route("/getSavedPost/:userId").get(rh.GetAllSavePost);
 router.route("/generateotp").post(rh.generateOtp);
 router.route("/verifyotp").post(rh.verifyOtp);
+router.route("/getuserpost/:id").get(rh.getUserPost);
+router.route("/deleteuserpost").delete(rh.deleteUserPost);
 
 export default router;

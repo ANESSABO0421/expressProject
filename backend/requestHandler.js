@@ -39,11 +39,36 @@ export async function generateOtp(req, res) {
     }
 
     await transporter.sendMail({
-      from: "aneesaboo123@gmail.com",
+      from: "extaneesspirit@gmail.com",
       to: email,
-      subject: "Verification",
-      text: `Your OTP is ${newOtp}`,
-      html: `<b>Your OTP is ${newOtp}</b>`,
+      subject: "Your OTP Code for Verification",
+      text: `Hello,
+      We received a request to verify your account. 
+      Your One-Time Password (OTP) is: ${newOtp}
+      ⚠️ This code is valid for the next 10 minutes. Please do not share it with anyone.
+      If you didn’t request this, you can safely ignore this email.
+      Best regards,
+      Anees Verification Team`,
+      html: `<div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #eee; border-radius: 10px; background: #fafafa;">
+      <h2 style="color: #4F46E5; text-align: center;">🔐 Email Verification</h2>
+      <p style="font-size: 16px; color: #333;">Hello,</p>
+      <p style="font-size: 16px; color: #333;">
+        We received a request to verify your account. Use the code below to complete your verification:
+      </p>
+      <div style="text-align: center; margin: 20px 0;">
+        <span style="display: inline-block; font-size: 28px; font-weight: bold; color: #4F46E5; background: #E0E7FF; padding: 12px 24px; border-radius: 8px; letter-spacing: 4px;">
+          ${newOtp}
+        </span>
+      </div>
+      <p style="font-size: 14px; color: #555; text-align: center;">
+        This code will expire in <b>10 minutes</b>. Please do not share it with anyone.
+      </p>
+      <hr style="margin: 30px 0; border: none; border-top: 1px solid #ddd;">
+      <p style="font-size: 12px; color: #888; text-align: center;">
+        If you didn’t request this, you can ignore this email.<br>
+        © ${new Date().getFullYear()} Anees Verification Team
+      </p>
+    </div>`,
     });
 
     return res.status(200).send("OTP sent successfully");
@@ -186,7 +211,6 @@ export async function userPost(req, res) {
 }
 
 // get all post
-
 export async function getAllPost(req, res) {
   try {
     const posts = await userPostSchema.find();
@@ -256,11 +280,11 @@ export const verifyOtp = async (req, res) => {
     // when we click the send otp the email will send to tp schema
     const emailFind = await Otp.find({ email: email });
     if (!emailFind) {
-      res.send(400).send("no email has been found");
+      return res.send(400).send("no email has been found");
     }
     // email find now the emails otp and compare the models otp and user entered otp
     if (emailFind.otp !== parseInt(userotp)) {
-      res.send(400).send("invalid otp");
+      return res.send(400).send("invalid otp");
     }
 
     // delete once verified
@@ -269,5 +293,38 @@ export const verifyOtp = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).send(error.message);
+  }
+};
+
+// edit user post
+export const getUserPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userFound = await userSchema.findById(id);
+    if (!userFound) {
+      return res.status(400).send("user not found");
+    }
+    const posts = await userPostSchema.find({ userId: id });
+    if (!posts) {
+      return res.status(400).send("no posts found");
+    } else {
+      res.status(200).send(posts);
+    }
+  } catch (error) {
+    res.status(500).send("server error:" + error);
+  }
+};
+
+export const deleteUserPost = async (req, res) => {
+  try {
+    const { deletePostId } = req.params;
+    const deleteUser = await userPostSchema.deleteOne(deletePostId);
+    if (deleteUser) {
+      res.status(200).send("data has been deleted");
+    } else {
+      res.status(400).send("failed to delete the post");
+    }
+  } catch (error) {
+    res.status(500).send("server error:" + error.message);
   }
 };

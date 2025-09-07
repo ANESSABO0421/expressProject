@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 const CreatePost = () => {
   const [description, setDescription] = useState("");
@@ -21,7 +22,6 @@ const CreatePost = () => {
   const createPost = async (e) => {
     try {
       e.preventDefault();
-      // console.log("haiii");
 
       const toBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -44,13 +44,15 @@ const CreatePost = () => {
       );
 
       if (sendData.status == 201) {
-        window.alert("posted successfully");
-        window.location.href = "/home";
+        toast.success("posted successfully");
+        setTimeout(() => {
+          window.location.href = "/home";
+        }, 3000);
       } else if (sendData.status == 400) {
-        window.alert("failed to post");
+        toast.error("failed to post");
       }
     } catch (error) {
-      console.log("Error:" + error);
+      console.log("Error:" + error.message);
     }
   };
 
