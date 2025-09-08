@@ -38,9 +38,20 @@ const Navbar = () => {
       <nav className="h-[70px] bg-white shadow-md flex justify-between items-center px-4 lg:px-8 fixed top-0 w-full z-50">
         {/* Title */}
         <div className="flex items-center">
-          <h1 className="text-lg lg:text-2xl font-extrabold text-indigo-600 tracking-wide">
-            Social Media App
+          <h1
+            className="text-3xl lg:text-4xl font-extrabold bg-clip-text text-transparent 
+                 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 
+                 tracking-wide cursor-pointer 
+                 animate-gradient hover:scale-105 transition-transform duration-500
+                 drop-shadow-lg"
+          >
+            Lumio
           </h1>
+
+          {/* Tagline */}
+          <span className="text-sm lg:text-base text-gray-700 italic lg:ml-4 mt-1 lg:mt-0">
+            Light up your social life.
+          </span>
         </div>
 
         {/* User Section */}
@@ -83,7 +94,7 @@ const Navbar = () => {
           className="hover:text-yellow-300 transition transform hover:scale-105"
         >
           Saved Post
-        </Link> 
+        </Link>
         <Link
           to={`/changepassword`}
           className="hover:text-yellow-300 transition transform hover:scale-105"

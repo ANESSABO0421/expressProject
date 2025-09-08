@@ -37,7 +37,7 @@ const Home = () => {
       const response = await axios.post(
         "http://localhost:3000/apis/addsavepost",
         {
-          userId:decoded.userId,
+          userId: decoded.userId,
           postId: postId,
         }
       );
@@ -61,7 +61,7 @@ const Home = () => {
   return (
     <div className="min-h-[900px] w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
       <userContext.Provider value={userData}>
-        <Navbar/>
+        <Navbar />
       </userContext.Provider>
       <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-center transition-all duration-300 h-auto gap-5 p-5 pt-15">
         {formData.map((p, indx) => (
@@ -69,26 +69,34 @@ const Home = () => {
             key={indx}
             className="p-5 flex items-center justify-center mt-[10vh] h-[40vh]"
           >
-            <div className="bg-white h-[350px] w-[300px] flex flex-col p-3 rounded-2xl shadow-lg hover:shadow-2xl transition duration-300 hover:-translate-y-1 hover:shadow-lg/50">
-              <Link to={`/postdetails/${p._id}`} className="w-full h-[200px]">
-                <div className="w-full h-full flex items-center justify-center bg-gray-500 rounded-lg overflow-hidden">
+            <div className="bg-white h-[350px] w-[300px] flex flex-col p-3 rounded-3xl shadow-md hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 hover:scale-105 overflow-hidden">
+              {/* Image */}
+              <Link
+                to={`/postdetails/${p._id}`}
+                className="w-full h-[200px] rounded-xl overflow-hidden"
+              >
+                <div className="w-full h-full flex items-center justify-center bg-gray-100 rounded-xl overflow-hidden">
                   <img
                     src={p.images[0]}
                     alt=""
-                    className="w-full h-full object-cover rounded-md"
+                    className="w-full h-full object-cover rounded-xl transform hover:scale-110 transition-transform duration-500"
                   />
                 </div>
               </Link>
 
-              <div className="flex justify-between items-center w-full mt-3">
-                <div>
-                  <p className="font-semibold text-gray-800">{p.des}</p>
-                  <p className="text-sm text-gray-500">{p.caption}</p>
-                </div>
-                <div>
+              {/* Post info */}
+              <div className="flex flex-col justify-between items-start w-full mt-3">
+                <p className="font-semibold text-gray-800 text-lg line-clamp-2">
+                  {p.des}
+                </p>
+                <p className="text-sm text-gray-500 mt-1 line-clamp-1">
+                  {p.caption}
+                </p>
+
+                <div className="flex justify-end w-full mt-2">
                   <button
                     onClick={() => userSavePost(p._id)}
-                    className="bg-indigo-600 text-white px-3 py-1 rounded-lg hover:bg-indigo-700"
+                    className="bg-indigo-600 text-white p-2 rounded-xl hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                   >
                     {savedPosts.includes(p._id) ? (
                       <FaBookmark />
