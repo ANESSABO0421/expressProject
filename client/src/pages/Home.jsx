@@ -59,11 +59,11 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
+    <div className="min-h-[900px] w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
       <userContext.Provider value={userData}>
-        <Navbar />
+        <Navbar/>
       </userContext.Provider>
-      <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-center transition-all duration-300 h-auto gap-5 p-5">
+      <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-center transition-all duration-300 h-auto gap-5 p-5 pt-15">
         {formData.map((p, indx) => (
           <div
             key={indx}

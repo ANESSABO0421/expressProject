@@ -65,7 +65,7 @@ const EditYourPost = () => {
 
               <div className="flex justify-between items-center mt-4">
                 <Link
-                  to={`/editpost/${post._id}`}
+                  to={`/editting/${post._id}`}
                   className="bg-indigo-600 hover:bg-indigo-700 text-white text-sm px-4 py-2 rounded-lg transition"
                 >
                   Edit

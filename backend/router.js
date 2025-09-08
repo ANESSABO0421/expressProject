@@ -18,5 +18,6 @@ router.route("/generateotp").post(rh.generateOtp);
 router.route("/verifyotp").post(rh.verifyOtp);
 router.route("/getuserpost/:id").get(rh.getUserPost);
 router.route("/deleteuserpost").delete(rh.deleteUserPost);
+router.route("/edittingpost/:id").put(rh.updatePost);
 
 export default router;

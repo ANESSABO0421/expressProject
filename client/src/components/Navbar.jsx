@@ -1,7 +1,6 @@
-import React, { useState } from "react";
-import { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { userContext } from "../context/context";
-import { FaHamburger, FaWindowClose } from "react-icons/fa";
+import { FaWindowClose } from "react-icons/fa";
 import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
@@ -32,54 +31,81 @@ const Navbar = () => {
   const toggle = () => {
     setOpen(!open);
   };
+
   return (
     <div>
-      <nav className="h-[80px] lg:h-[70px] bg-white flex justify-between z-201 p-3 lg:p-5">
-        {/* title */}
-        <div className="flex items-center justify-center">
-          <h1 className="text-[14px] lg:text-3xl font-bold">
-            Social media App
+      {/* Navbar */}
+      <nav className="h-[70px] bg-white shadow-md flex justify-between items-center px-4 lg:px-8 fixed top-0 w-full z-50">
+        {/* Title */}
+        <div className="flex items-center">
+          <h1 className="text-lg lg:text-2xl font-extrabold text-indigo-600 tracking-wide">
+            Social Media App
           </h1>
         </div>
-        {/* image */}
-        <div className="flex items-center justify-center gap-2">
+
+        {/* User Section */}
+        <div className="flex items-center gap-3">
           <img
             src={userData.image}
-            alt="user image"
-            className="h-[40px] w-[40px] lg:h-[60px] lg:w-[60px] rounded-full lg:rounded-full object-cover "
+            alt="user"
+            className="h-10 w-10 lg:h-12 lg:w-12 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
           />
-          <h1 className="ml-2">Welcome,</h1>
-          {userData.name}
-          {/* sidebar */}
+          <div className="hidden lg:flex flex-col">
+            <span className="text-gray-500 text-sm">Welcome,</span>
+            <span className="font-semibold text-gray-800">{userData.name}</span>
+          </div>
           <button
             onClick={toggle}
-            className="bg-pink-500 p-2 rounded text-white z-200"
+            className="bg-indigo-600 p-2 rounded-full text-white shadow hover:bg-indigo-700 transition duration-300"
           >
-            {!open ? <AiOutlineMenu /> : <FaWindowClose />}
+            {!open ? <AiOutlineMenu size={22} /> : <FaWindowClose size={22} />}
           </button>
-
-          {/*overlay*/}
-          {open && (
-            <div
-              className="fixed bg-black inset-0 opacity-50 z-100 "
-              onClick={toggle}
-            ></div>
-          )}
         </div>
       </nav>
-      {/* sidebar */}
+
+      {/* Overlay */}
+      {open && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"
+          onClick={toggle}
+        ></div>
+      )}
+
+      {/* Sidebar */}
       <div
-        className={`fixed right-0 h-full flex flex-col items-center justify-center  bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500  w-64 text-white text-2xl gap-10 z-200 transition-transform ${
-          open ? "translate-x-0" : "translate-x-full"
-        }`}
+        className={`fixed right-0 top-0 h-full flex flex-col items-center justify-center 
+        bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 
+        w-64 text-white text-xl gap-8 shadow-2xl transform transition-transform duration-500 ease-in-out 
+        ${open ? "translate-x-0" : "translate-x-full"} z-50`}
       >
-        <Link to={`/savedpost/${decoded.userId}`}>Saved post</Link>
-        <Link to={`/changepassword`}>Change Password</Link>
-        <Link to={`/createpost`}>New Post</Link>
-        <Link to={`/editpost/${decoded.userId}`}>Edit Your Post</Link>
+        <Link
+          to={`/savedpost/${decoded.userId}`}
+          className="hover:text-yellow-300 transition transform hover:scale-105"
+        >
+          Saved Post
+        </Link> 
+        <Link
+          to={`/changepassword`}
+          className="hover:text-yellow-300 transition transform hover:scale-105"
+        >
+          Change Password
+        </Link>
+        <Link
+          to={`/createpost`}
+          className="hover:text-yellow-300 transition transform hover:scale-105"
+        >
+          New Post
+        </Link>
+        <Link
+          to={`/editpost/${decoded.userId}`}
+          className="hover:text-yellow-300 transition transform hover:scale-105"
+        >
+          Edit Your Post
+        </Link>
+
         <button
           onClick={() => Logout()}
-          className="bg-red-100 text-red-900 p-4 rounded cursor-pointer hover:bg-red-400 hover:-translate-y-1 duration-300 ease-out"
+          className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 hover:scale-105 transition duration-300 ease-in-out"
         >
           Logout
         </button>

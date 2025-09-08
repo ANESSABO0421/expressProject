@@ -315,6 +315,7 @@ export const getUserPost = async (req, res) => {
   }
 };
 
+// delete post
 export const deleteUserPost = async (req, res) => {
   try {
     const { deletePostId } = req.params;
@@ -325,6 +326,26 @@ export const deleteUserPost = async (req, res) => {
       res.status(400).send("failed to delete the post");
     }
   } catch (error) {
+    res.status(500).send("server error:" + error.message);
+  }
+};
+
+// update the editted post
+export const updatePost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const update = await userPostSchema.findById(id);
+    if (!update) {
+      res.status(400).send("post not found");
+    }
+    update.caption = req.body.caption || update.caption;
+    update.des = req.body.des || update.des;
+    if (req.body.images) update.images || req.body.images;
+
+    const updatedThePost = await update.save();
+    res.json(updatedThePost);
+  } catch (error) {
+    console.log(error.message);
     res.status(500).send("server error:" + error.message);
   }
 };

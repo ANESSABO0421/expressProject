@@ -8,6 +8,7 @@ import CreatePost from './pages/CreatePost'
 import PostsDetails from './pages/PostsDetails'
 import SavedPost from './pages/SavedPost'
 import EditYourPost from './pages/EditYourPost'
+import Editting from './pages/Editting'
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Route path='/postdetails/:id' element={<PostsDetails/>}/>
         <Route path='/savedpost/:id' element={<SavedPost/>}/>
         <Route path='/editPost/:id' element={<EditYourPost/>}/>
+        <Route path='/editting/:id' element={<Editting/>}/>
       </Routes>
     </div>
   )

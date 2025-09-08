@@ -1,28 +1,29 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { jwtDecode } from "jwt-decode";
+import { FaArrowLeft } from "react-icons/fa";
 
 const PostsDetails = () => {
   const { id } = useParams();
-  const userId = localStorage.getItem("userId");
-  // console.log(userId)
-  // console.log(id);
   const token = localStorage.getItem("token");
-  const decoded=jwtDecode(token)
+  const decoded = jwtDecode(token);
 
   const [user, setUser] = useState("");
   const [userSelectedPost, setUserSelectedPost] = useState(null);
 
+  // for back button
+  const navigate = useNavigate();
+
   async function getUser() {
     const getUsers = await axios.get("http://localhost:3000/apis/getusers");
     const getUser = getUsers.data.find((u) => u._id == decoded.userId);
-    setUser(getUser)
+    setUser(getUser);
   }
 
   async function fetchUserPost() {
@@ -39,8 +40,16 @@ const PostsDetails = () => {
   }, []);
 
   return (
-    <div className="flex h-screen justify-center px-2 py-4 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
-      <div className="w-full max-w-md bg-white shadow-md rounded-xl overflow-hidden">
+    <div className="flex min-h-[100vh] justify-center px-2 py-4 bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
+      <div className="absolute left-0 ml-5">
+        <button
+          className="bg-white p-3 rounded-2xl"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft />
+        </button>
+      </div>
+      <div className="h-[700px] mt-20 lg:w-full max-w-md bg-white shadow-md rounded-xl overflow-hidden">
         {userSelectedPost ? (
           <>
             <div className="flex items-center gap-2 p-3 border-b">
