@@ -47,11 +47,11 @@ const SignupForm = () => {
           userotp: otp,
         }
       );
-      if (!otpVerify) {
-        toast.error("inavlid Otp");
-      } else {
-        toast.success("otp verified");
+      if (otpVerify.data.success) {
+        toast.success("OTP verified");
         setStep(3);
+      } else {
+        toast.error("invalid otp");
       }
     } catch (error) {
       toast.error("inavlid Otp");

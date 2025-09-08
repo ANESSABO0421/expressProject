@@ -278,7 +278,7 @@ export const verifyOtp = async (req, res) => {
   try {
     const { email, userotp } = req.body;
     // when we click the send otp the email will send to tp schema
-    const emailFind = await Otp.find({ email: email });
+    const emailFind = await Otp.findOne({ email: email });
     if (!emailFind) {
       return res.send(400).send("no email has been found");
     }
@@ -289,7 +289,9 @@ export const verifyOtp = async (req, res) => {
 
     // delete once verified
     await Otp.deleteOne({ email });
-    return res.status(200).send("otp verified suceessfully");
+    return res
+      .status(200)
+      .send({ success: true, message: "otp verified suceessfully" });
   } catch (error) {
     console.log(error.message);
     res.status(500).send(error.message);
