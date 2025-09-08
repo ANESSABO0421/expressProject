@@ -16,9 +16,18 @@ const PostsDetails = () => {
 
   const [user, setUser] = useState("");
   const [userSelectedPost, setUserSelectedPost] = useState(null);
+  // posted user image and name
+  const [postUser, setPostUser] = useState(null);
 
   // for back button
   const navigate = useNavigate();
+
+  // getting posted user image and name
+  async function fetchPostUser(userId) {
+    const getUsers = await axios.get("http://localhost:3000/apis/getusers");
+    const poster = getUsers.data.find((u) => u._id == decoded.userId);
+    setPostUser(poster);
+  }
 
   async function getUser() {
     const getUsers = await axios.get("http://localhost:3000/apis/getusers");
@@ -32,6 +41,10 @@ const PostsDetails = () => {
     });
     const selectedPost = allPost.data.find((post) => post._id === id);
     setUserSelectedPost(selectedPost);
+
+    if (selectedPost) {
+      fetchPostUser(selectedPost.userId);
+    }
   }
 
   useEffect(() => {
@@ -54,11 +67,11 @@ const PostsDetails = () => {
           <>
             <div className="flex items-center gap-2 p-3 border-b">
               <img
-                src={`${user.image}`}
+                src={`${postUser?.image}`}
                 alt="user avatar"
                 className="w-8 h-8 rounded-full"
               />
-              <span className="font-semibold text-sm">{user.name}</span>
+              <span className="font-semibold text-sm">{postUser?.name}</span>{" "}
             </div>
 
             <Swiper
