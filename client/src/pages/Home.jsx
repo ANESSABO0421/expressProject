@@ -18,14 +18,14 @@ const Home = () => {
   console.log(decoded.userId);
 
   const getUser = async () => {
-    const users = await axios.get("http://localhost:3000/apis/getusers");
+    const users = await axios.get("https://backendlumio.onrender.com/apis/getusers");
     const user = users.data.find((u) => u._id == decoded.userId);
     setUserData(user);
   };
 
   const getAllPost = async () => {
     // const allPost = await axios.get("http://localhost:3000/apis/getallpost");
-    const allPost = await axios.get("http://localhost:3000/apis/getallpost", {
+    const allPost = await axios.get("https://backendlumio.onrender.com/apis/getallpost", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -35,7 +35,7 @@ const Home = () => {
   const userSavePost = async (postId) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/apis/addsavepost",
+        "https://backendlumio.onrender.com/apis/addsavepost",
         {
           userId: decoded.userId,
           postId: postId,

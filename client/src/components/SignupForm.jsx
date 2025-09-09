@@ -28,7 +28,7 @@ const SignupForm = () => {
   const handleSendOtp = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/apis/generateotp", { email });
+      await axios.post("https://backendlumio.onrender.com/apis/generateotp", { email });
       toast.success("otp has been send successfully");
       setStep(2);
     } catch (error) {
@@ -41,7 +41,7 @@ const SignupForm = () => {
     e.preventDefault();
     try {
       const otpVerify = await axios.post(
-        "http://localhost:3000/apis/verifyotp",
+        "https://backendlumio.onrender.com/apis/verifyotp",
         {
           email,
           userotp: otp,
@@ -67,7 +67,7 @@ const SignupForm = () => {
     }
 
     const createNewUser = await axios.post(
-      "http://localhost:3000/apis/newuser",
+      "https://backendlumio.onrender.com/apis/newuser",
       {
         name,
         email,

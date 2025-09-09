@@ -12,7 +12,7 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // console.log("hai");
-    const login = await axios.post("http://localhost:3000/apis/login", {
+    const login = await axios.post("https://backendlumio.onrender.com/apis/login", {
       email,
       password,
     });

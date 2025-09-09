@@ -10,7 +10,7 @@ const ChangePasswordForm = () => {
     // console.log("hai");
     try {
       const updatePassword = await axios.post(
-        "http://localhost:3000/apis/changepassword",
+        "https://backendlumio.onrender.com/apis/changepassword",
         {
           email,
           oldpassword,

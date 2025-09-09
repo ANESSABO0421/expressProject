@@ -16,7 +16,7 @@ const SavedPost = () => {
   const { id } = useParams();
   const getSavedPost = async () => {
     const response = await axios.get(
-      `http://localhost:3000/apis/getSavedPost/${decoded.userId}`
+      `https://backendlumio.onrender.com/apis/getSavedPost/${decoded.userId}`
     );
     setSavedPost(response.data);
   };

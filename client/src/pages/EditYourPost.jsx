@@ -9,7 +9,7 @@ const EditYourPost = () => {
   console.log(id);
   const getUserPost = async () => {
     const userPost = await axios.get(
-      `http://localhost:3000/apis/getuserpost/${id}`
+      `https://backendlumio.onrender.com/apis/getuserpost/${id}`
     );
     // console.log(userPost.data)
     setUsersPost(userPost.data);
@@ -18,7 +18,7 @@ const EditYourPost = () => {
 
   async function deletePost(id) {
     const deletePost = await axios.delete(
-      "http://localhost:3000/apis/deleteuserpost",
+      "https://backendlumio.onrender.com/apis/deleteuserpost",
       {
         data: { deletePostId: id },
       }

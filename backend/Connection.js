@@ -1,7 +1,11 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config()
+const atlasdb = process.env.MONGO_URL;
 
 export async function Connection() {
-  const db = await mongoose.connect("mongodb+srv://AneesAboobacker:FCK9SsoiY3IHuII0@cluster0.0m0gutv.mongodb.net/lumio");
+  const db = await mongoose.connect(atlasdb);
   console.log("mongoDB connected!!!");
   return db;
 }

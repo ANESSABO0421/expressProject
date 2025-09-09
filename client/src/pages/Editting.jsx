@@ -17,7 +17,7 @@ const Editting = () => {
     const fetchData = async () => {
       try {
         const postData = await axios.get(
-          `http://localhost:3000/apis/getallpost`,
+          `https://backendlumio.onrender.com/apis/getallpost`,
           {
             headers: { Authorization: `Bearer ${token}` },
           }

@@ -24,19 +24,19 @@ const PostsDetails = () => {
 
   // getting posted user image and name
   async function fetchPostUser(userId) {
-    const getUsers = await axios.get("http://localhost:3000/apis/getusers");
+    const getUsers = await axios.get("https://backendlumio.onrender.com/apis/getusers");
     const poster = getUsers.data.find((u) => u._id == decoded.userId);
     setPostUser(poster);
   }
 
   async function getUser() {
-    const getUsers = await axios.get("http://localhost:3000/apis/getusers");
+    const getUsers = await axios.get("https://backendlumio.onrender.com/apis/getusers");
     const getUser = getUsers.data.find((u) => u._id == decoded.userId);
     setUser(getUser);
   }
 
   async function fetchUserPost() {
-    const allPost = await axios.get("http://localhost:3000/apis/getallpost", {
+    const allPost = await axios.get("https://backendlumio.onrender.com/apis/getallpost", {
       headers: { Authorization: `Bearer ${token}` },
     });
     const selectedPost = allPost.data.find((post) => post._id === id);

@@ -34,7 +34,7 @@ const CreatePost = () => {
       const images = await Promise.all(image.map((file) => toBase64(file)));
 
       const sendData = await axios.post(
-        "http://localhost:3000/apis/createpost",
+        "https://backendlumio.onrender.com/apis/createpost",
         {
           userId: user,
           des: description,
