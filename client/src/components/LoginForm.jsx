@@ -11,29 +11,40 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("hai");
-    const login = await axios.post("https://backendlumio.onrender.com/apis/login", {
-      email,
-      password,
-    });
-    if (login) {
-      toast.success("You have been logged in succesfully", {
+
+    try {
+      const login = await axios.post(
+        "https://backendlumio.onrender.com/apis/login",
+        { email, password }
+      );
+
+      toast.success("You have been logged in successfully", {
         className: "!bg-indigo-600 !text-white !rounded-lg !shadow-lg",
         bodyClassName: "!text-white font-semibold",
         progressClassName: "!bg-yellow-400",
       });
-      console.log(login.data);
 
       // Save token in localStorage
       localStorage.setItem("token", login.data.token);
 
-      // localStorage.setItem("userId", `${login.data._id}`);
-      // window.location.href = "/home";
+      // Redirect
       setTimeout(() => {
         window.location.href = "/home";
-      }, 3000);
+      }, 2000);
+    } catch (err) {
+      if (err.response) {
+        toast.error(err.response.data, {
+          className: "!bg-red-600 !text-white !rounded-lg !shadow-lg",
+          bodyClassName: "!text-white font-semibold",
+          progressClassName: "!bg-yellow-400",
+        });
+      } else {
+        // Network error or something else
+        toast.error("Something went wrong. Please try again.");
+      }
     }
   };
+
   return (
     <div className="flex items-center justify-center  px-4">
       <form
@@ -74,6 +85,9 @@ const LoginForm = () => {
           <Link to={"/signup"} className="text-blue-500 underline-none">
             Signup Now
           </Link>
+        </p>
+        <p className="text-center mt-4">
+          <Link className="text-blue-500 underline-none" to={`/forgotPassword`}>Forgot Password?</Link>
         </p>
       </form>
     </div>

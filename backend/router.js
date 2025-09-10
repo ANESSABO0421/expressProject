@@ -10,6 +10,7 @@ router.route("/getusers").get(rh.getUsers);
 router.route("/createpost").post(rh.userPost);
 router.route("/getallpost").get(Auth, rh.getAllPost);
 router.route("/changepassword").post(rh.ChangePassword);
+router.route("/resetpassword").post(rh.resetPassword);
 // add save post
 router.route("/addsavepost").post(rh.saveThePost);
 // get all the saved post of a user

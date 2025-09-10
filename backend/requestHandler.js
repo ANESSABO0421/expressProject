@@ -342,12 +342,33 @@ export const updatePost = async (req, res) => {
     }
     update.caption = req.body.caption || update.caption;
     update.des = req.body.des || update.des;
-    if (req.body.images) update.images || req.body.images;
+    if (req.body.images) update.images = req.body.images;
 
     const updatedThePost = await update.save();
     res.json(updatedThePost);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("server error:" + error.message);
+  }
+};
+
+// reset password
+export const resetPassword = async (req, res) => {
+  try {
+    const { email, password } = req.body;
+    // wheatehr user exist
+    const user = await userSchema.findOne({ email: email });
+    if (!isExist) {
+      return res.status(404).send("user not found");
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).send("password changed successfully");
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("server error:", error.message);
   }
 };
