@@ -352,13 +352,60 @@ export const updatePost = async (req, res) => {
   }
 };
 
+// send link for clicking
+export const sendResetLink = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const user = await userSchema.findOne({ email });
+    if (!user) {
+      return res.status(404).send("user not found");
+    }
+
+    //  This must point to your frontend reset-password page
+    const resetUrl = `http://localhost:3001/reset-password?email=${encodeURIComponent(
+      email
+    )}`;
+
+    // await transporter.sendMail({
+    //   from: "extaneesspirit@gmail.com",
+    //   to: email,
+    //   subject: "Password Reset Request",
+    //   html: `
+    //     <div style="font-family: Arial, sans-serif; padding:20px; background:#f9f9f9; border-radius:8px;">
+    //       <h2 style="color:#4F46E5;">Reset Your Password</h2>
+    //       <p>Hello,</p>
+    //       <p>You requested to reset your password. Click the button below to proceed:</p>
+    //       <a href="${resetUrl}"
+    //          style="display:inline-block; background:#4F46E5; color:#fff; padding:12px 20px; text-decoration:none; border-radius:6px; font-weight:bold;">
+    //         Reset Password
+    //       </a>
+    //       <p style="margin-top:20px; font-size:12px; color:#888;">If you didn’t request this, you can ignore this email.</p>
+    //     </div>
+    //   `,
+    // });
+    await transporter.sendMail({
+      from: "extaneesspirit@gmail.com",
+      to: email,
+      subject: "Password Reset Request",
+      text: `Click this link to reset your password: http://localhost:3000/reset-password?email=${encodeURIComponent(
+        email
+      )}`,
+    });
+
+    res.status(200).send("Reset link sent to your email");
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("server error: " + error.message);
+  }
+};
+
 // reset password
 export const resetPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
     // wheatehr user exist
     const user = await userSchema.findOne({ email: email });
-    if (!isExist) {
+    if (!user) {
       return res.status(404).send("user not found");
     }
 
