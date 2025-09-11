@@ -10,7 +10,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        "https://backendlumio.onrender.com/apis/sendresetlink",
+        "https://backendlumio.onrender.com/apis/sendresetslink",
         { email }
       );
       toast.success(res.data);
