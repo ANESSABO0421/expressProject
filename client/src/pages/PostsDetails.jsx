@@ -14,7 +14,7 @@ const PostsDetails = () => {
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
 
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [userSelectedPost, setUserSelectedPost] = useState(null);
   // posted user image and name
   const [postUser, setPostUser] = useState(null);
@@ -24,21 +24,28 @@ const PostsDetails = () => {
 
   // getting posted user image and name
   async function fetchPostUser(userId) {
-    const getUsers = await axios.get("https://backendlumio.onrender.com/apis/getusers");
-    const poster = getUsers.data.find((u) => u._id == decoded.userId);
+    const getUsers = await axios.get(
+      "https://backendlumio.onrender.com/apis/getusers"
+    );
+    const poster = getUsers.data.find((u) => u._id == userId);
     setPostUser(poster);
   }
 
-  async function getUser() {
-    const getUsers = await axios.get("https://backendlumio.onrender.com/apis/getusers");
-    const getUser = getUsers.data.find((u) => u._id == decoded.userId);
-    setUser(getUser);
-  }
+  // async function getUser() {
+  //   const getUsers = await axios.get(
+  //     "https://backendlumio.onrender.com/apis/getusers"
+  //   );
+  //   const getUserWhoPost = getUsers.data.find((u) => u._id == decoded.userId);
+  //   setUser(getUserWhoPost);
+  // }
 
   async function fetchUserPost() {
-    const allPost = await axios.get("https://backendlumio.onrender.com/apis/getallpost", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const allPost = await axios.get(
+      "https://backendlumio.onrender.com/apis/getallpost",
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     const selectedPost = allPost.data.find((post) => post._id === id);
     setUserSelectedPost(selectedPost);
 
@@ -49,7 +56,7 @@ const PostsDetails = () => {
 
   useEffect(() => {
     fetchUserPost();
-    getUser();
+    // getUser();
   }, []);
 
   return (
