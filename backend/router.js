@@ -11,7 +11,7 @@ router.route("/createpost").post(rh.userPost);
 router.route("/getallpost").get(Auth, rh.getAllPost);
 router.route("/changepassword").post(rh.ChangePassword);
 router.route("/resetpassword").post(rh.resetPassword);
-router.route("/sendresetlink").post(rh.sendResetLink);
+router.route("/sendresetslink").post(rh.sendResetLink);
 // add save post
 router.route("/addsavepost").post(rh.saveThePost);
 // get all the saved post of a user
