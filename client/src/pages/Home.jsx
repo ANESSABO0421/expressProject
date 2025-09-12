@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { userContext } from "../context/context";
-import { FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark, FaHeart, FaRegHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
@@ -10,13 +10,14 @@ import { toast } from "react-toastify";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
-  const [savedPosts, setSavedPosts] = useState([]); // state for saved posts
+  const [savedPosts, setSavedPosts] = useState([]); 
+  const [likedPosts, setLikedPosts] = useState([]); 
 
   // get token and decode
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
 
-  // fetch user data + savedPosts
+  // fetch user data + savedPosts + likedPosts
   const getUser = async () => {
     try {
       const users = await axios.get(
@@ -25,9 +26,12 @@ const Home = () => {
       const user = users.data.find((u) => u._id === decoded.userId);
       setUserData(user);
 
-      // set savedPosts from DB
       if (user.savedPosts) {
         setSavedPosts(user.savedPosts.map((post) => post._id || post));
+      }
+
+      if (user.likedPosts) {
+        setLikedPosts(user.likedPosts.map((post) => post._id || post));
       }
     } catch (err) {
       console.log(err);
@@ -58,13 +62,31 @@ const Home = () => {
       });
 
       if (savedPosts.includes(postId)) {
-        // remove from saved
         setSavedPosts(savedPosts.filter((id) => id !== postId));
         toast.success("Post unsaved");
       } else {
-        // add to saved
         setSavedPosts([...savedPosts, postId]);
         toast.success("Post saved");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // like/unlike post
+  const userLikePost = async (postId) => {
+    try {
+      await axios.put("https://backendlumio.onrender.com/apis/like", {
+        userId: decoded.userId,
+        postId: postId,
+      });
+
+      if (likedPosts.includes(postId)) {
+        setLikedPosts(likedPosts.filter((id) => id !== postId));
+        toast.info("Post unliked");
+      } else {
+        setLikedPosts([...likedPosts, postId]);
+        toast.success("Post liked");
       }
     } catch (error) {
       console.log(error);
@@ -112,7 +134,20 @@ const Home = () => {
                   {p.caption}
                 </p>
 
-                <div className="flex justify-end w-full mt-2">
+                <div className="flex justify-between items-center w-full mt-2">
+                  {/* Like button */}
+                  <button
+                    onClick={() => userLikePost(p._id)}
+                    className="bg-pink-500 text-white p-2 rounded-xl hover:bg-pink-600 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
+                  >
+                    {likedPosts.includes(p._id) ? (
+                      <FaHeart />
+                    ) : (
+                      <FaRegHeart />
+                    )}
+                  </button>
+
+                  {/* Save button */}
                   <button
                     onClick={() => userSavePost(p._id)}
                     className="bg-indigo-600 text-white p-2 rounded-xl hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
