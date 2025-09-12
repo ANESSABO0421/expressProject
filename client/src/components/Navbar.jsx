@@ -1,7 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { userContext } from "../context/context";
-import { FaWindowClose } from "react-icons/fa";
-import { AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
@@ -9,9 +7,23 @@ import { toast } from "react-toastify";
 const Navbar = () => {
   const userData = useContext(userContext);
   const [open, setOpen] = useState(false);
-  const tokenUserId = localStorage.getItem("token");
+  const dropdownRef = useRef(null);
 
+  const tokenUserId = localStorage.getItem("token");
   const decoded = jwtDecode(tokenUserId);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    function handleClickOutside(e) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
 
   function Logout() {
     localStorage.removeItem("userId");
@@ -27,10 +39,6 @@ const Navbar = () => {
       window.location.href = "/";
     }, 1000);
   }
-
-  const toggle = () => {
-    setOpen(!open);
-  };
 
   return (
     <div>
@@ -54,73 +62,68 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* User Section */}
-        <div className="flex items-center gap-3">
-          <img
-            src={userData.image}
-            alt="user"
-            className="h-10 w-10 lg:h-12 lg:w-12 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
-          />
-          <div className="hidden lg:flex flex-col">
-            <span className="text-gray-500 text-sm">Welcome,</span>
-            <span className="font-semibold text-gray-800">{userData.name}</span>
-          </div>
+        {/* Profile & Dropdown */}
+        <div className="relative" ref={dropdownRef}>
           <button
-            onClick={toggle}
-            className="bg-indigo-600 p-2 rounded-full text-white shadow hover:bg-indigo-700 transition duration-300"
+            onClick={() => setOpen(!open)}
+            className="flex items-center gap-2 focus:outline-none"
           >
-            {!open ? <AiOutlineMenu size={22} /> : <FaWindowClose size={22} />}
+            <img
+              src={userData.image}
+              alt="user"
+              className="h-10 w-10 lg:h-12 lg:w-12 rounded-full object-cover border-2 border-indigo-500 shadow-sm"
+            />
+            <div className="hidden lg:flex flex-col text-left">
+              <span className="text-gray-500 text-sm">Welcome,</span>
+              <span className="font-semibold text-gray-800">
+                {userData.name}
+              </span>
+            </div>
           </button>
+
+          {/* Dropdown */}
+          <div
+            className={`absolute right-0 mt-3 w-56 bg-white rounded-lg shadow-lg py-2 z-50
+              transform transition-all duration-300 ease-out
+              ${
+                open
+                  ? "opacity-100 scale-100 translate-y-0"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
+          >
+            <Link
+              to={`/savedpost/${decoded.userId}`}
+              className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
+            >
+              Saved Post
+            </Link>
+            <Link
+              to={`/changepassword`}
+              className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
+            >
+              Change Password
+            </Link>
+            <Link
+              to={`/createpost`}
+              className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
+            >
+              New Post
+            </Link>
+            <Link
+              to={`/editpost/${decoded.userId}`}
+              className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
+            >
+              Edit Your Post
+            </Link>
+            <button
+              onClick={Logout}
+              className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100"
+            >
+              Logout
+            </button>
+          </div>
         </div>
       </nav>
-
-      {/* Overlay */}
-      {open && (
-        <div
-          className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-40"
-          onClick={toggle}
-        ></div>
-      )}
-
-      {/* Sidebar */}
-      <div
-        className={`fixed right-0 top-0 h-full flex flex-col items-center justify-center 
-        bg-gradient-to-br from-indigo-700 via-purple-700 to-pink-600 
-        w-64 text-white text-xl gap-8 shadow-2xl transform transition-transform duration-500 ease-in-out 
-        ${open ? "translate-x-0" : "translate-x-full"} z-50`}
-      >
-        <Link
-          to={`/savedpost/${decoded.userId}`}
-          className="hover:text-yellow-300 transition transform hover:scale-105"
-        >
-          Saved Post
-        </Link>
-        <Link
-          to={`/changepassword`}
-          className="hover:text-yellow-300 transition transform hover:scale-105"
-        >
-          Change Password
-        </Link>
-        <Link
-          to={`/createpost`}
-          className="hover:text-yellow-300 transition transform hover:scale-105"
-        >
-          New Post
-        </Link>
-        <Link
-          to={`/editpost/${decoded.userId}`}
-          className="hover:text-yellow-300 transition transform hover:scale-105"
-        >
-          Edit Your Post
-        </Link>
-
-        <button
-          onClick={() => Logout()}
-          className="bg-red-500 text-white px-6 py-2 rounded-lg shadow hover:bg-red-600 hover:scale-105 transition duration-300 ease-in-out"
-        >
-          Logout
-        </button>
-      </div>
     </div>
   );
 };

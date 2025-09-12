@@ -9,7 +9,7 @@ export default defineConfig({
     outDir: 'dist', // Vercel expects this folder as output
   },
   server: {
-    port: 3000,      // local dev port
-    open: true,      // auto-open browser on dev
+    port: 5173,      
+    open: true,      
   },
 })
