@@ -27,7 +27,7 @@ const SavedPost = () => {
 
   return (
     <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 min-h-screen py-8 px-4">
-      {savedPost ? (
+      {savedPost.length > 0 ? (
         <>
           {savedPost.map((post, indx) => (
             <div
@@ -61,7 +61,9 @@ const SavedPost = () => {
           ))}
         </>
       ) : (
-        <p className="text-center text-white text-lg">No saved posts found</p>
+        <p className="h-screen flex items-center justify-center text-2xl text-white rounded">
+          No saved posts found
+        </p>
       )}
     </div>
   );
