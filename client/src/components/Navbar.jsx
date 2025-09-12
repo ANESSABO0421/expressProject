@@ -66,7 +66,7 @@ const Navbar = () => {
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setOpen(!open)}
-            className="flex items-center gap-2 focus:outline-none"
+            className="flex items-center gap-2 px-3 py-2 rounded-lg focus:outline-none hover:bg-gray-200 transition-colors duration-200"
           >
             <img
               src={userData.image}

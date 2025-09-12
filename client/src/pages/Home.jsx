@@ -5,6 +5,7 @@ import { userContext } from "../context/context";
 import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { toast } from "react-toastify";
 
 const Home = () => {
   const [userData, setUserData] = useState("");
@@ -59,11 +60,11 @@ const Home = () => {
       if (savedPosts.includes(postId)) {
         // remove from saved
         setSavedPosts(savedPosts.filter((id) => id !== postId));
-        window.alert("Post unsaved");
+        toast.success("Post unsaved");
       } else {
         // add to saved
         setSavedPosts([...savedPosts, postId]);
-        window.alert("Post saved");
+        toast.success("Post saved");
       }
     } catch (error) {
       console.log(error);
