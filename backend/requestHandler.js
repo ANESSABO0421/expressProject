@@ -418,3 +418,31 @@ export const resetPassword = async (req, res) => {
     res.status(500).send("server error:", error.message);
   }
 };
+
+// like and unlike post
+export const likePost = async (req, res) => {
+  try {
+    const { postId, userId } = req.body;
+    const post = await userPostSchema.findById(postId);
+    if (!post) {
+      return res.status(400).send("post not found");
+    }
+    // unlike
+    if (post.likes.includes(userId)) {
+      post.likes = post.likes.filter((id) => id.toString() !== userId);
+      await post.save();
+      return res
+        .status(200)
+        .json({ message: "Unliked successfully", likes: post.likes.length });
+    } else {
+      post.likes.push(userId);
+      await post.save();
+      return res
+        .status(200)
+        .json({ message: "liked successfully", likes: post.likes.length });
+    }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("server error:", error.message);
+  }
+};
