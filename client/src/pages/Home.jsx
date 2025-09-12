@@ -2,51 +2,68 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Navbar from "../components/Navbar";
 import { userContext } from "../context/context";
-import { FaArrowLeft, FaBookmark, FaRegBookmark } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
+  const [savedPosts, setSavedPosts] = useState([]); // state for saved posts
 
-  // for saving state
-  const [savedPosts, setSavedPosts] = useState([]);
-  // token is send now get it
+  // get token and decode
   const token = localStorage.getItem("token");
-
   const decoded = jwtDecode(token);
-  console.log(decoded.userId);
 
+  // fetch user data + savedPosts
   const getUser = async () => {
-    const users = await axios.get("https://backendlumio.onrender.com/apis/getusers");
-    const user = users.data.find((u) => u._id == decoded.userId);
-    setUserData(user);
-  };
-
-  const getAllPost = async () => {
-    // const allPost = await axios.get("http://localhost:3000/apis/getallpost");
-    const allPost = await axios.get("https://backendlumio.onrender.com/apis/getallpost", {
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    setFormData(allPost.data);
-  };
-
-  const userSavePost = async (postId) => {
     try {
-      const response = await axios.post(
-        "https://backendlumio.onrender.com/apis/addsavepost",
+      const users = await axios.get(
+        "https://backendlumio.onrender.com/apis/getusers"
+      );
+      const user = users.data.find((u) => u._id === decoded.userId);
+      setUserData(user);
+
+      // set savedPosts from DB
+      if (user.savedPosts) {
+        setSavedPosts(user.savedPosts.map((post) => post._id || post));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // fetch all posts
+  const getAllPost = async () => {
+    try {
+      const allPost = await axios.get(
+        "https://backendlumio.onrender.com/apis/getallpost",
         {
-          userId: decoded.userId,
-          postId: postId,
+          headers: { Authorization: `Bearer ${token}` },
         }
       );
+      setFormData(allPost.data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  // save/unsave post
+  const userSavePost = async (postId) => {
+    try {
+      await axios.post("https://backendlumio.onrender.com/apis/addsavepost", {
+        userId: decoded.userId,
+        postId: postId,
+      });
+
       if (savedPosts.includes(postId)) {
+        // remove from saved
         setSavedPosts(savedPosts.filter((id) => id !== postId));
-        window.alert("already saved the post");
+        window.alert("Post unsaved");
       } else {
+        // add to saved
         setSavedPosts([...savedPosts, postId]);
-        window.alert("saved the post");
+        window.alert("Post saved");
       }
     } catch (error) {
       console.log(error);
@@ -63,6 +80,7 @@ const Home = () => {
       <userContext.Provider value={userData}>
         <Navbar />
       </userContext.Provider>
+
       <div className="grid grid-cols-1 lg:grid-cols-4 items-center justify-center transition-all duration-300 h-auto gap-5 p-5 pt-15">
         {formData.map((p, indx) => (
           <div
