@@ -76,10 +76,12 @@ const Home = () => {
   // like/unlike post
   const userLikePost = async (postId) => {
     try {
-      await axios.put("https://backendlumio.onrender.com/apis/like", {
+ const asd=     await axios.put("http://localhost:3000/apis/like", {
         userId: decoded.userId,
         postId: postId,
       });
+      console.log(asd);
+      
 
       if (likedPosts.includes(postId)) {
         setLikedPosts(likedPosts.filter((id) => id !== postId));
