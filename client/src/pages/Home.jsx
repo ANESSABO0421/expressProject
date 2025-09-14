@@ -11,13 +11,12 @@ const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
   const [savedPosts, setSavedPosts] = useState([]);
-  const [likedPosts, setLikedPosts] = useState([]);
 
   // get token and decode
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
 
-  // fetch user data + savedPosts + likedPosts
+  // fetch user data + savedPosts
   const getUser = async () => {
     try {
       const users = await axios.get(
@@ -28,10 +27,6 @@ const Home = () => {
 
       if (user.savedPosts) {
         setSavedPosts(user.savedPosts.map((post) => post._id || post));
-      }
-
-      if (user.likedPosts) {
-        setLikedPosts(user.likedPosts.map((post) => post._id || post));
       }
     } catch (err) {
       console.log(err);
@@ -76,19 +71,25 @@ const Home = () => {
   // like/unlike post
   const userLikePost = async (postId) => {
     try {
-      const like=await axios.put("https://backendlumio.onrender.com/apis/like", {
+      const res = await axios.put("https://backendlumio.onrender.com/apis/like", {
         userId: decoded.userId,
-        postId: postId,
+        postId,
       });
-      console.log(like)
 
-      if (likedPosts.includes(postId)) {
-        setLikedPosts(likedPosts.filter((id) => id !== postId));
-        toast.info("Post unliked");
-      } else {
-        setLikedPosts([...likedPosts, postId]);
-        toast.success("Post liked");
-      }
+      setFormData((prevPosts) =>
+        prevPosts.map((p) =>
+          p._id === postId
+            ? {
+                ...p,
+                likes: p.likes.includes(decoded.userId)
+                  ? p.likes.filter((id) => id !== decoded.userId)
+                  : [...p.likes, decoded.userId],
+              }
+            : p
+        )
+      );
+
+      toast.success(res.data.message);
     } catch (error) {
       console.log(error);
     }
@@ -141,7 +142,7 @@ const Home = () => {
                     onClick={() => userLikePost(p._id)}
                     className="bg-pink-500 text-white p-2 rounded-xl hover:bg-pink-600 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                   >
-                    {likedPosts.includes(p._id) ? <FaHeart /> : <FaRegHeart />}
+                    {p.likes.includes(decoded.userId) ? <FaHeart /> : <FaRegHeart />}
                   </button>
 
                   {/* Save button */}
@@ -149,11 +150,7 @@ const Home = () => {
                     onClick={() => userSavePost(p._id)}
                     className="bg-indigo-600 text-white p-2 rounded-xl hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                   >
-                    {savedPosts.includes(p._id) ? (
-                      <FaBookmark />
-                    ) : (
-                      <FaRegBookmark />
-                    )}
+                    {savedPosts.includes(p._id) ? <FaBookmark /> : <FaRegBookmark />}
                   </button>
                 </div>
               </div>

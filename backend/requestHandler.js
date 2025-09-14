@@ -5,8 +5,22 @@ import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import Otp from "./models/Otp.js";
+import multer from "multer";
+import path from "path";
 
 dotenv.config();
+
+// multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "uploads/"); // folder where files go
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + "-" + file.originalname.replace(/\s+/g, "_"));
+  },
+});
+
+export const upload = multer({ storage });
 
 // nodemailer
 const transporter = nodemailer.createTransport({
@@ -337,18 +351,25 @@ export const updatePost = async (req, res) => {
   try {
     const { id } = req.params;
     const update = await userPostSchema.findById(id);
+
     if (!update) {
-      res.status(400).send("post not found");
+      return res.status(404).send("Post not found");
     }
+
     update.caption = req.body.caption || update.caption;
     update.des = req.body.des || update.des;
-    if (req.body.images) update.images = req.body.images;
+
+    // if new images are uploaded
+    if (req.files && req.files.length > 0) {
+      const filePaths = req.files.map((file) => file.path); 
+      update.images = filePaths; 
+    }
 
     const updatedThePost = await update.save();
-    res.json(updatedThePost);
+    return res.status(200).json(updatedThePost);
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send("server errors:" + error.message);
+    console.error(error.message);
+    return res.status(500).send("server error: " + error.message);
   }
 };
 

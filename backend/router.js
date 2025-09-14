@@ -1,6 +1,7 @@
 import { Router } from "express";
 import * as rh from "./requestHandler.js";
 import Auth from "./middleware/Auth.js";
+import { upload } from "./requestHandler.js";
 
 const router = Router();
 
@@ -20,7 +21,7 @@ router.route("/generateotp").post(rh.generateOtp);
 router.route("/verifyotp").post(rh.verifyOtp);
 router.route("/getuserpost/:id").get(rh.getUserPost);
 router.route("/deleteuserpost").delete(rh.deleteUserPost);
-router.route("/edittingpost/:id").put(rh.updatePost);
+router.route("/edittingpost/:id").put(upload.array("images", 5), rh.updatePost);
 // like and unlike post
 router.route("/like").put(rh.likePost);
 
