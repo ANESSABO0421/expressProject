@@ -15,6 +15,7 @@ const Home = () => {
   // get token and decode
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
+  console.log(decoded.userId)
 
   // fetch user data + savedPosts
   const getUser = async () => {

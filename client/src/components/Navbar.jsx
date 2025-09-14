@@ -98,6 +98,12 @@ const Navbar = () => {
               Saved Post
             </Link>
             <Link
+              to={`/myProfile`}
+              className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
+            >
+              My Profile
+            </Link>
+            <Link
               to={`/changepassword`}
               className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
             >

@@ -11,6 +11,7 @@ import EditYourPost from './pages/EditYourPost'
 import Editting from './pages/Editting'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
+import Profile from './pages/Profile'
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
         <Route path='/editting/:id' element={<Editting/>}/>
         <Route path='/forgotPassword' element={<ForgotPassword/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
+        <Route path='/myProfile' element={<Profile/>}/>
       </Routes>
     </div>
   )

@@ -361,8 +361,8 @@ export const updatePost = async (req, res) => {
 
     // if new images are uploaded
     if (req.files && req.files.length > 0) {
-      const filePaths = req.files.map((file) => file.path); 
-      update.images = filePaths; 
+      const filePaths = req.files.map((file) => file.path);
+      update.images = filePaths;
     }
 
     const updatedThePost = await update.save();
@@ -462,6 +462,43 @@ export const likePost = async (req, res) => {
         .status(200)
         .json({ message: "liked successfully", likes: post.likes.length });
     }
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("server error:", error.message);
+  }
+};
+
+// get profile
+export const getProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userSchema.findById(id).select("-password");
+    if (!user) {
+      return res.status(404).send("User Not Found");
+    }
+    res.status(201).json(user);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("server error:", error.message);
+  }
+};
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await userSchema.findById(id);
+    if (!user) {
+      return res.status(404).send("user not found!!!");
+    }
+    user.name = req.body.name || user.name;
+    user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
+
+    if (req.file) {
+      user.image = req.file.path;
+    }
+
+    const updateUser = await user.save();
+    res.status(200).json(updateUser);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("server error:", error.message);
