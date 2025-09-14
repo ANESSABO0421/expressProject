@@ -10,8 +10,8 @@ import { toast } from "react-toastify";
 const Home = () => {
   const [userData, setUserData] = useState("");
   const [formData, setFormData] = useState([]);
-  const [savedPosts, setSavedPosts] = useState([]); 
-  const [likedPosts, setLikedPosts] = useState([]); 
+  const [savedPosts, setSavedPosts] = useState([]);
+  const [likedPosts, setLikedPosts] = useState([]);
 
   // get token and decode
   const token = localStorage.getItem("token");
@@ -76,12 +76,11 @@ const Home = () => {
   // like/unlike post
   const userLikePost = async (postId) => {
     try {
- const asd=     await axios.put("http://localhost:3000/apis/like", {
+      const like=await axios.put("https://backendlumio.onrender.com/apis/like", {
         userId: decoded.userId,
         postId: postId,
       });
-      console.log(asd);
-      
+      console.log(like)
 
       if (likedPosts.includes(postId)) {
         setLikedPosts(likedPosts.filter((id) => id !== postId));
@@ -142,11 +141,7 @@ const Home = () => {
                     onClick={() => userLikePost(p._id)}
                     className="bg-pink-500 text-white p-2 rounded-xl hover:bg-pink-600 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                   >
-                    {likedPosts.includes(p._id) ? (
-                      <FaHeart />
-                    ) : (
-                      <FaRegHeart />
-                    )}
+                    {likedPosts.includes(p._id) ? <FaHeart /> : <FaRegHeart />}
                   </button>
 
                   {/* Save button */}

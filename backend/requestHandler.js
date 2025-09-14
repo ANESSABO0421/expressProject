@@ -348,7 +348,7 @@ export const updatePost = async (req, res) => {
     res.json(updatedThePost);
   } catch (error) {
     console.log(error.message);
-    res.status(500).send("server error:" + error.message);
+    res.status(500).send("server errors:" + error.message);
   }
 };
 
