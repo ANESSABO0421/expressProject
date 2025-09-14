@@ -25,9 +25,7 @@ const EditYourPost = () => {
     );
     if (deletePost) {
       toast.success("data has been deleted successfully");
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
+      setUsersPost(usersPost.filter((post) => post._id !== id));
     } else {
       toast.error("failed to delete the post");
     }
