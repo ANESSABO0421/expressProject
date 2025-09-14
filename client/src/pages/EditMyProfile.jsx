@@ -10,7 +10,7 @@ const EditMyProfile = () => {
   const [formData, setFormData] = useState({
     name: "",
     phoneNumber: "",
-    image: null,
+    image: null, // can be string (URL) or File
   });
 
   // Fetch user profile data
@@ -23,7 +23,7 @@ const EditMyProfile = () => {
         setFormData({
           name: res.data.name || "",
           phoneNumber: res.data.phoneNumber || "",
-          image: null,
+          image: res.data.image || null, // ✅ keep old image path
         });
       } catch (err) {
         console.error(err);
@@ -52,7 +52,9 @@ const EditMyProfile = () => {
       const data = new FormData();
       data.append("name", formData.name);
       data.append("phoneNumber", formData.phoneNumber);
-      if (formData.image) {
+
+      // ✅ Only append file if user selected a new one
+      if (formData.image && typeof formData.image !== "string") {
         data.append("image", formData.image);
       }
 
@@ -103,9 +105,24 @@ const EditMyProfile = () => {
           />
         </div>
 
-        {/* Image Upload  */}
-         <div>
+        {/* Image Upload */}
+        <div>
           <label className="block text-left text-gray-600">Profile Image</label>
+
+          {/* Show existing image if it's a string (URL path) */}
+          {formData.image && typeof formData.image === "string" && (
+            <div className="mb-4 text-center">
+              <img
+                src={`http://localhost:3000${formData.image}`}
+                alt="Current profile"
+                className="w-24 h-24 rounded-full mx-auto object-cover"
+              />
+              <p className="text-gray-500 text-sm mt-2">
+                Current Profile Picture
+              </p>
+            </div>
+          )}
+
           <input
             type="file"
             accept="image/*"

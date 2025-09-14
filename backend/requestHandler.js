@@ -334,8 +334,8 @@ export const getUserPost = async (req, res) => {
 // delete post
 export const deleteUserPost = async (req, res) => {
   try {
-    const { deletePostId } = req.params;
-    const deleteUser = await userPostSchema.deleteOne(deletePostId);
+    const { deletePostId } = req.body;
+    const deleteUser = await userPostSchema.deleteOne({ _id: deletePostId });
     if (deleteUser) {
       res.status(200).send("data has been deleted");
     } else {
@@ -494,9 +494,8 @@ export const updateProfile = async (req, res) => {
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
 
     if (req.file) {
-      user.image = req.file.path;
+      user.image = `/uploads/${req.file.filename}`;
       console.log("Uploaded file:", req.file);
-      console.log("File path:", req.file.path);
     }
 
     const updateUser = await user.save();
