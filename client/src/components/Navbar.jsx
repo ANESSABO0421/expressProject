@@ -98,7 +98,7 @@ const Navbar = () => {
               Saved Post
             </Link>
             <Link
-              to={`/myProfile`}
+              to={`/myProfile/${decoded.userId}`}
               className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
             >
               My Profile

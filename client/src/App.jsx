@@ -12,6 +12,7 @@ import Editting from './pages/Editting'
 import ForgotPassword from './pages/ForgotPassword'
 import ResetPassword from './pages/ResetPassword'
 import Profile from './pages/Profile'
+import EditMyProfile from './pages/EditMyProfile'
 
 
 const App = () => {
@@ -29,7 +30,8 @@ const App = () => {
         <Route path='/editting/:id' element={<Editting/>}/>
         <Route path='/forgotPassword' element={<ForgotPassword/>}/>
         <Route path='/reset-password' element={<ResetPassword/>}/>
-        <Route path='/myProfile' element={<Profile/>}/>
+        <Route path='/myProfile/:id' element={<Profile/>}/>
+        <Route path='/editmyprofile/:id' element={<EditMyProfile/>}/>
       </Routes>
     </div>
   )

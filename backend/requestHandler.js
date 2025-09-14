@@ -495,6 +495,8 @@ export const updateProfile = async (req, res) => {
 
     if (req.file) {
       user.image = req.file.path;
+      console.log("Uploaded file:", req.file);
+      console.log("File path:", req.file.path);
     }
 
     const updateUser = await user.save();

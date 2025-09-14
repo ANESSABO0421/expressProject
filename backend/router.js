@@ -21,13 +21,13 @@ router.route("/generateotp").post(rh.generateOtp);
 router.route("/verifyotp").post(rh.verifyOtp);
 router.route("/getuserpost/:id").get(rh.getUserPost);
 router.route("/deleteuserpost").delete(rh.deleteUserPost);
-// router.route("/edittingpost/:id").put(upload.array("images", 5), rh.updatePost);
+router.route("/edittingpost/:id").put(upload.array("images", 5), rh.updatePost);
 // like and unlike post
 router.route("/like").put(rh.likePost);
 // get profile
 router.route("/myprofile/:id").get(rh.getProfile);
 
 // update profile
-router.route("/myprofile/:id").put(upload.single("image"), rh.updateProfile);
+router.route("/editprof/:id").put(upload.single("image"), rh.updateProfile);
 
 export default router;
