@@ -20,7 +20,7 @@ const SavedPost = () => {
     );
     setSavedPost(response.data);
   };
-  console.log(savedPost);
+  // console.log(savedPost);
   useEffect(() => {
     getSavedPost();
   }, []);

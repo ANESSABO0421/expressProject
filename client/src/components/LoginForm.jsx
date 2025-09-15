@@ -77,7 +77,7 @@ const LoginForm = () => {
           type="submit"
           className="w-full bg-indigo-600 hover:bg-indigo-700 transition transform active:scale-95 rounded-lg py-3 text-white font-semibold shadow-md"
         >
-          Sign Up
+          Login
         </button>
 
         <p className="text-center mt-4">

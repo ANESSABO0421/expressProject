@@ -9,14 +9,10 @@ const CreatePost = () => {
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState([]);
 
-  const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("token");
-  console.log(token);
 
   const decode = jwtDecode(token);
   const user = decode.userId;
-  console.log(user);
-  //   console.log(userId);
 
   // createPost
   const createPost = async (e) => {
@@ -59,7 +55,7 @@ const CreatePost = () => {
   return (
     <div className="h-screen flex items-center justify-center w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
       <form
-        className="bg-white w-full max-w-md p-8 rounded-2xl shadow-xl"
+        className="bg-white w-[370px] lg:w-full max-w-md p-8 rounded-2xl shadow-xl"
         onSubmit={createPost}
       >
         <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">

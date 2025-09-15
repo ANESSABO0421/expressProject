@@ -103,12 +103,12 @@ const Navbar = () => {
             >
               My Profile
             </Link>
-            <Link
+            {/* <Link
               to={`/changepassword`}
               className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
             >
               Change Password
-            </Link>
+            </Link> */}
             <Link
               to={`/createpost`}
               className="block px-4 py-2 text-gray-700 hover:bg-indigo-100"
@@ -121,12 +121,12 @@ const Navbar = () => {
             >
               Edit Your Post
             </Link>
-            <button
+            {/* <button
               onClick={Logout}
               className="w-full text-left px-4 py-2 text-red-600 hover:bg-red-100"
             >
               Logout
-            </button>
+            </button> */}
           </div>
         </div>
       </nav>
