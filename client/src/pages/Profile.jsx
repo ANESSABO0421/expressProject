@@ -47,7 +47,7 @@ const Profile = () => {
       <div className="absolute top-6 left-6">
         <button
           className="bg-white p-3 rounded-2xl shadow-md hover:shadow-lg transition"
-          onClick={() => navigate(-1)}
+          onClick={() => navigate("/home")}
         >
           <FaArrowLeft />
         </button>
