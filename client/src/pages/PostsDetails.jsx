@@ -8,11 +8,14 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { jwtDecode } from "jwt-decode";
 import { FaArrowLeft } from "react-icons/fa";
+import { useContext } from "react";
+import { likeContext } from "../context/context";
 
 const PostsDetails = () => {
   const { id } = useParams();
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
+  const formdata = useContext(likeContext);
 
   // const [user, setUser] = useState("");
   const [userSelectedPost, setUserSelectedPost] = useState(null);
@@ -30,6 +33,7 @@ const PostsDetails = () => {
     const poster = getUsers.data.find((u) => u._id == userId);
     setPostUser(poster);
   }
+  // console.log(formdata)
 
   // async function getUser() {
   //   const getUsers = await axios.get(
