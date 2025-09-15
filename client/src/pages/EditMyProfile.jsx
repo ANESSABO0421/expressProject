@@ -19,7 +19,7 @@ const EditMyProfile = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/apis/myprofile/${id}`
+          `https://backendlumio.onrender.com/apis/myprofile/${id}`
         );
         setFormData({
           name: res.data.name || "",
@@ -58,7 +58,7 @@ const EditMyProfile = () => {
         data.append("image", formData.image);
       }
 
-      await axios.put(`http://localhost:3000/apis/editprof/${id}`, data, {
+      await axios.put(`https://backendlumio.onrender.com/apis/editprof/${id}`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

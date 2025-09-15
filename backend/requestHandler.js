@@ -494,7 +494,7 @@ export const updateProfile = async (req, res) => {
     user.phoneNumber = req.body.phoneNumber || user.phoneNumber;
 
     if (req.file) {
-      user.image = `/uploads/${req.file.filename}`;
+      user.image = `${process.env.BACKEND_URL}/uploads/${req.file.filename}`;
       console.log("Uploaded file:", req.file);
     }
 
