@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { FaArrowLeft } from "react-icons/fa";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const EditYourPost = () => {
   const [usersPost, setUsersPost] = useState([]);
+  const navigate=useNavigate()
   const { id } = useParams();
 
   // Fetch user posts
@@ -47,6 +49,14 @@ const EditYourPost = () => {
 
   return (
     <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 min-h-screen py-10">
+      <div className="absolute left-0 ml-5">
+        <button
+          className="bg-white p-3 rounded-2xl"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft />
+        </button>
+      </div>
       <h1 className="text-4xl text-center font-bold text-white mb-8">
         Edit Your Posts
       </h1>

@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaArrowLeft } from "react-icons/fa";
 
 const EditMyProfile = () => {
   const { id } = useParams();
@@ -23,7 +24,7 @@ const EditMyProfile = () => {
         setFormData({
           name: res.data.name || "",
           phoneNumber: res.data.phoneNumber || "",
-          image: res.data.image || null, // ✅ keep old image path
+          image: res.data.image || null, 
         });
       } catch (err) {
         console.error(err);
@@ -53,7 +54,6 @@ const EditMyProfile = () => {
       data.append("name", formData.name);
       data.append("phoneNumber", formData.phoneNumber);
 
-      // ✅ Only append file if user selected a new one
       if (formData.image && typeof formData.image !== "string") {
         data.append("image", formData.image);
       }
@@ -72,6 +72,14 @@ const EditMyProfile = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6">
+      <div className="absolute top-6 left-6">
+        <button
+          className="bg-white p-3 rounded-2xl"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft />
+        </button>
+      </div>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-8 space-y-6"

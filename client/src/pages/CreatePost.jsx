@@ -3,11 +3,14 @@ import React from "react";
 import { useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { toast } from "react-toastify";
+import { FaArrowLeft } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = () => {
   const [description, setDescription] = useState("");
   const [caption, setCaption] = useState("");
   const [image, setImage] = useState([]);
+  const navigate = useNavigate();
 
   const token = localStorage.getItem("token");
 
@@ -54,6 +57,14 @@ const CreatePost = () => {
 
   return (
     <div className="h-screen flex items-center justify-center w-full bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 ">
+      <div className="absolute top-6 left-6">
+        <button
+          className="bg-white p-3 rounded-2xl"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft />
+        </button>
+      </div>
       <form
         className="bg-white w-[370px] lg:w-full max-w-md p-8 rounded-2xl shadow-xl"
         onSubmit={createPost}

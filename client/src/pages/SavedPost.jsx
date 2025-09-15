@@ -1,17 +1,19 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Pagination, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import { FaArrowLeft } from "react-icons/fa";
 
 const SavedPost = () => {
   const [savedPost, setSavedPost] = useState([]);
   const tokenUserId = localStorage.getItem("token");
   const decoded = jwtDecode(tokenUserId);
+  const navigate=useNavigate()
 
   const { id } = useParams();
   const getSavedPost = async () => {
@@ -27,12 +29,20 @@ const SavedPost = () => {
 
   return (
     <div className="bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 min-h-screen py-8 px-4">
+      <div className="absolute left-0 ml-5">
+        <button
+          className="bg-white p-3 rounded-2xl"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft/>
+        </button>
+      </div>
       {savedPost.length > 0 ? (
         <>
           {savedPost.map((post, indx) => (
             <div
               key={indx}
-              className="mb-10 max-w-3xl mx-auto bg-white text-black rounded-2xl shadow-2xl p-4"
+              className="mb-10 max-w-3xl mx-auto sm:mt-20 bg-white text-black rounded-2xl shadow-2xl p-4"
             >
               <Swiper
                 modules={[Navigation, Pagination]}

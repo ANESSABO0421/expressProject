@@ -15,7 +15,7 @@ const Home = () => {
   // get token and decode
   const token = localStorage.getItem("token");
   const decoded = jwtDecode(token);
-  console.log(decoded.userId)
+  // console.log(decoded.userId);
 
   // fetch user data + savedPosts
   const getUser = async () => {
@@ -72,10 +72,13 @@ const Home = () => {
   // like/unlike post
   const userLikePost = async (postId) => {
     try {
-      const res = await axios.put("https://backendlumio.onrender.com/apis/like", {
-        userId: decoded.userId,
-        postId,
-      });
+      const res = await axios.put(
+        "https://backendlumio.onrender.com/apis/like",
+        {
+          userId: decoded.userId,
+          postId,
+        }
+      );
 
       setFormData((prevPosts) =>
         prevPosts.map((p) =>
@@ -139,19 +142,32 @@ const Home = () => {
 
                 <div className="flex justify-between items-center w-full mt-2">
                   {/* Like button */}
-                  <button
-                    onClick={() => userLikePost(p._id)}
-                    className="bg-pink-500 text-white p-2 rounded-xl hover:bg-pink-600 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
-                  >
-                    {p.likes.includes(decoded.userId) ? <FaHeart /> : <FaRegHeart />}
-                  </button>
+                  <div className="flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => userLikePost(p._id)}
+                      className="bg-pink-500 text-white p-2 rounded-xl hover:bg-pink-600 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
+                    >
+                      {p.likes.includes(decoded.userId) ? (
+                        <FaHeart />
+                      ) : (
+                        <FaRegHeart />
+                      )}
+                    </button>
+                    <span className="text-black font-medium">
+                      {p.likes.length}
+                    </span>
+                  </div>
 
                   {/* Save button */}
                   <button
                     onClick={() => userSavePost(p._id)}
                     className="bg-indigo-600 text-white p-2 rounded-xl hover:bg-indigo-700 shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center"
                   >
-                    {savedPosts.includes(p._id) ? <FaBookmark /> : <FaRegBookmark />}
+                    {savedPosts.includes(p._id) ? (
+                      <FaBookmark />
+                    ) : (
+                      <FaRegBookmark />
+                    )}
                   </button>
                 </div>
               </div>

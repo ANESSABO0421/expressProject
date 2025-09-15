@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { FaArrowLeft } from "react-icons/fa";
 
 const Profile = () => {
   const { id } = useParams();
@@ -10,7 +11,9 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     try {
-      const res = await axios.get(`https://backendlumio.onrender.com/apis/myprofile/${id}`);
+      const res = await axios.get(
+        `https://backendlumio.onrender.com/apis/myprofile/${id}`
+      );
       setUser(res.data);
     } catch (error) {
       console.error(error);
@@ -33,16 +36,22 @@ const Profile = () => {
 
   if (!user) {
     return (
-      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500">
-        <p className="text-white text-xl font-semibold animate-pulse">
-          Loading profile...
-        </p>
+      <div className="flex justify-center items-center h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500">
+        <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-6">
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-indigo-600 via-purple-600 to-pink-500 p-6">
+      <div className="absolute top-6 left-6">
+        <button
+          className="bg-white p-3 rounded-2xl shadow-md hover:shadow-lg transition"
+          onClick={() => navigate(-1)}
+        >
+          <FaArrowLeft />
+        </button>
+      </div>
       <div className="w-full max-w-md bg-white shadow-2xl rounded-3xl p-8 text-center transform transition duration-500 hover:scale-[1.02]">
         {/* Profile Image */}
         <div className="relative">
@@ -51,7 +60,6 @@ const Profile = () => {
             src={user.image || "https://via.placeholder.com/150"}
             alt={user.name}
           />
-
         </div>
 
         {/* User Info */}
