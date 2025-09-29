@@ -53,7 +53,7 @@ export async function generateOtp(req, res) {
     }
 
     await transporter.sendMail({
-      from: "extaneesspirit@gmail.com",
+      from: "aneesaboo123@gmail.com",
       to: email,
       subject: "Your OTP Code for Verification",
       text: `Hello,
