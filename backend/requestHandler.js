@@ -387,7 +387,7 @@ export const sendResetLink = async (req, res) => {
 /reset-password?email=${encodeURIComponent(email)}`;
 
     await transporter.sendMail({
-      from: "extaneesspirit@gmail.com",
+      from: "aneesaboo123@gmail.com",
       to: email,
       subject: "Password Reset Request",
       html: `
