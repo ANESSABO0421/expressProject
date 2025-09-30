@@ -26,8 +26,8 @@ export const upload = multer({ storage });
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "aneesaboo123@gmail.com",
-    pass: "onuw blhh ymhk kkjg",
+    user: "extaneesspirit@gmail.com",
+    pass: "htsy xfeg oail wqil",
   },
 });
 
@@ -53,7 +53,7 @@ export async function generateOtp(req, res) {
     }
 
     await transporter.sendMail({
-      from: "aneesaboo123@gmail.com",
+      from: "extaneesspirit@gmail.com",
       to: email,
       subject: "Your OTP Code for Verification",
       text: `Hello,
@@ -387,7 +387,7 @@ export const sendResetLink = async (req, res) => {
 /reset-password?email=${encodeURIComponent(email)}`;
 
     await transporter.sendMail({
-      from: "aneesaboo123@gmail.com",
+      from: "extaneesspirit@gmail.com",
       to: email,
       subject: "Password Reset Request",
       html: `
